@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ymmh2lub7hus"]
+
+[ext_resource type="PackedScene" uid="uid://dvwbtymfjl4l0" path="res://Scenes/Effects/effect.tscn" id="1_tuhj4"]
+[ext_resource type="FontFile" uid="uid://ddepajodofned" path="res://Assets/Fonts/dogica.otf" id="2_dtwpm"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6mteu"]
+font = ExtResource("2_dtwpm")
+font_size = 8
+
+[node name="FloatingTextEffect" instance=ExtResource("1_tuhj4")]
+
+[node name="Label" type="Label" parent="." index="1"]
+offset_right = 40.0
+offset_bottom = 23.0
+scale = Vector2(0.75, 0.75)
+text = "10"
+label_settings = SubResource("LabelSettings_6mteu")

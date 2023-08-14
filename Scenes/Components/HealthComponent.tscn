@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://oqpijohaay4c"]
+
+[ext_resource type="Script" path="res://Scripts/Components/HealthComponent.cs" id="1_fd8pd"]
+[ext_resource type="PackedScene" uid="uid://dukqjln2q1hot" path="res://Scenes/Effects/enemyDeathEffect.tscn" id="2_twcl0"]
+
+[node name="HealthComponent" type="Node2D"]
+script = ExtResource("1_fd8pd")
+DeathEffectScene = ExtResource("2_twcl0")

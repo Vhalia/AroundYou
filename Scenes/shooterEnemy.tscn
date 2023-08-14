@@ -1,0 +1,106 @@
+[gd_scene load_steps=14 format=3 uid="uid://6l4wcse0lbip"]
+
+[ext_resource type="Texture2D" uid="uid://du4lupf1wj05o" path="res://Assets/enemy.png" id="1_26iux"]
+[ext_resource type="PackedScene" uid="uid://ct1e0j6p0qqss" path="res://Scenes/enemy.tscn" id="1_l3vts"]
+[ext_resource type="Script" path="res://Scripts/ShooterEnemy.cs" id="2_gkjhs"]
+[ext_resource type="PackedScene" uid="uid://c1p4y0dx7df03" path="res://Scenes/bananaGun.tscn" id="4_vr1de"]
+[ext_resource type="Script" path="res://Scripts/States/CharacterStates/IdleState.cs" id="5_je0dj"]
+[ext_resource type="Script" path="res://Scripts/States/CharacterStates/MovingState.cs" id="6_0qmwj"]
+[ext_resource type="PackedScene" uid="uid://bb2dktmgdis4c" path="res://Scenes/Components/MoveComponent.tscn" id="7_cormy"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ia1kh"]
+animation = &"moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1jolh"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_rftwy"]
+states/moving/node = SubResource("AnimationNodeAnimation_ia1kh")
+states/moving/position = Vector2(388, 116)
+transitions = ["Start", "moving", SubResource("AnimationNodeStateMachineTransition_1jolh")]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_thr0m"]
+
+[sub_resource type="Animation" id="Animation_uks8x"]
+resource_name = "moving"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 0), Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_itwmj"]
+_data = {
+"moving": SubResource("Animation_uks8x")
+}
+
+[node name="ShooterEnemy" groups=["Enemy"] instance=ExtResource("1_l3vts")]
+script = ExtResource("2_gkjhs")
+GroupsToHit = PackedStringArray("Ally")
+metadata/_edit_lock_ = true
+
+[node name="ShadowComponent" parent="." index="0"]
+position = Vector2(0, 12)
+scale = Vector2(1.2, 1.2)
+
+[node name="Sprite2D" parent="." index="1"]
+position = Vector2(0, -0.508482)
+texture = ExtResource("1_26iux")
+metadata/_edit_lock_ = true
+
+[node name="Weapon" parent="." index="2" instance=ExtResource("4_vr1de")]
+position = Vector2(12, 0)
+FiringRate = 0.3
+MagazineCapacity = 1
+ReloadTime = 3.0
+BulletSpeed = 75.0
+
+[node name="CollisionShape2D" parent="." index="3"]
+metadata/_edit_lock_ = true
+
+[node name="StateMachine" parent="." index="4"]
+metadata/_edit_lock_ = true
+
+[node name="IDLE" type="Node2D" parent="StateMachine" index="0"]
+script = ExtResource("5_je0dj")
+
+[node name="MOVING" type="Node2D" parent="StateMachine" index="1"]
+script = ExtResource("6_0qmwj")
+
+[node name="MoveComponent" parent="StateMachine/MOVING" index="0" instance=ExtResource("7_cormy")]
+Speed = 750.0
+Desceleration = 0.6
+
+[node name="HealthComponent" parent="." index="5"]
+MaxHealth = 3
+metadata/_edit_lock_ = true
+
+[node name="HurtboxComponent" parent="." index="6" node_paths=PackedStringArray("HealthComponent")]
+HealthComponent = NodePath("../HealthComponent")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+metadata/_edit_lock_ = true
+
+[node name="FloatingTextComponent" parent="." index="7"]
+visible = false
+
+[node name="AnimationTree" parent="." index="8"]
+tree_root = SubResource("AnimationNodeStateMachine_rftwy")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource("AnimationNodeStateMachinePlayback_thr0m")
+
+[node name="AnimationPlayer" parent="." index="9"]
+libraries = {
+"": SubResource("AnimationLibrary_itwmj")
+}

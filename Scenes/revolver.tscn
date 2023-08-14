@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://cla7tkoqnxfie"]
+
+[ext_resource type="PackedScene" uid="uid://bc5ryiki2f6hg" path="res://Scenes/weapon.tscn" id="1_duwev"]
+[ext_resource type="PackedScene" uid="uid://e2jd5qyk4o4h" path="res://Scenes/bullet.tscn" id="2_434oh"]
+[ext_resource type="Texture2D" uid="uid://spei74bpavls" path="res://Assets/revolver.png" id="2_c6gon"]
+[ext_resource type="Texture2D" uid="uid://bi7xr1vx05sy4" path="res://Assets/revolver_shoot.png" id="4_tvq73"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkhkt"]
+atlas = ExtResource("2_c6gon")
+region = Rect2(0, 0, 8, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bw03a"]
+atlas = ExtResource("4_tvq73")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm4v8"]
+atlas = ExtResource("4_tvq73")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34ixi"]
+atlas = ExtResource("4_tvq73")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e1faj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkhkt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bw03a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm4v8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_34ixi")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 20.0
+}]
+
+[node name="Revolver" instance=ExtResource("1_duwev")]
+FiringRate = 0.1
+MagazineCapacity = 6
+Damage = 2
+metadata/_edit_lock_ = true
+
+[node name="Bullet" parent="." index="0" instance=ExtResource("2_434oh")]
+visible = false
+
+[node name="BulletSpawnMarker" parent="." index="3"]
+position = Vector2(7, -1)
+gizmo_extents = 3.0
+
+[node name="AnimatedSprite2D" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_e1faj")
+animation = &"shoot"

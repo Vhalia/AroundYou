@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://w1qsirr7712f"]
+
+[ext_resource type="FontFile" uid="uid://ddepajodofned" path="res://Assets/Fonts/dogica.otf" id="1_688u5"]
+
+[resource]
+font = ExtResource("1_688u5")
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)

@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://c1p4y0dx7df03"]
+
+[ext_resource type="PackedScene" uid="uid://bc5ryiki2f6hg" path="res://Scenes/weapon.tscn" id="1_ngaxw"]
+[ext_resource type="Texture2D" uid="uid://svdcwc8wiuid" path="res://Assets/banana_gun.png" id="2_1i5wn"]
+[ext_resource type="PackedScene" uid="uid://xonqrle4ra4b" path="res://Scenes/enemyBullet.tscn" id="2_5k73h"]
+[ext_resource type="Texture2D" uid="uid://cfks6bpl0cudp" path="res://Assets/bananagunShootAnimation.png" id="4_66xa6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ety25"]
+atlas = ExtResource("4_66xa6")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjhhk"]
+atlas = ExtResource("4_66xa6")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1ppw"]
+atlas = ExtResource("4_66xa6")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3p0y6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_1i5wn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ety25")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjhhk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1ppw")
+}],
+"loop": false,
+"name": &"shoot",
+"speed": 10.0
+}]
+
+[node name="BananaGun" instance=ExtResource("1_ngaxw")]
+BulletScene = ExtResource("2_5k73h")
+
+[node name="EnemyBullet" parent="." index="0" instance=ExtResource("2_5k73h")]
+visible = false
+
+[node name="BulletSpawnMarker" parent="." index="3"]
+position = Vector2(8, 0)
+
+[node name="AnimatedSprite2D" parent="." index="4"]
+sprite_frames = SubResource("SpriteFrames_3p0y6")
+animation = &"shoot"
+frame = 1
+frame_progress = 0.842057

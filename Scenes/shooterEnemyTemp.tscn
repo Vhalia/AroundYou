@@ -1,0 +1,70 @@
+[gd_scene load_steps=12 format=3 uid="uid://bihgvfd735id"]
+
+[ext_resource type="Script" path="res://Scripts/Enemy.cs" id="1_wci6c"]
+[ext_resource type="Texture2D" uid="uid://du4lupf1wj05o" path="res://Assets/enemy.png" id="2_cfo2s"]
+[ext_resource type="PackedScene" uid="uid://c1p4y0dx7df03" path="res://Scenes/bananaGun.tscn" id="3_8qwsh"]
+[ext_resource type="Script" path="res://Scripts/States/StateMachine.cs" id="4_6qj8n"]
+[ext_resource type="Script" path="res://Scripts/States/CharacterStates/IdleState.cs" id="5_48fag"]
+[ext_resource type="Script" path="res://Scripts/States/CharacterStates/MovingState.cs" id="6_2elgc"]
+[ext_resource type="PackedScene" uid="uid://bb2dktmgdis4c" path="res://Scenes/Components/MoveComponent.tscn" id="7_cv1bp"]
+[ext_resource type="PackedScene" uid="uid://oqpijohaay4c" path="res://Scenes/Components/HealthComponent.tscn" id="8_vwn6f"]
+[ext_resource type="PackedScene" uid="uid://cbfopf2ah4mxb" path="res://Scenes/Components/HurtboxComponent.tscn" id="9_ffts0"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n2k4x"]
+radius = 5.0
+height = 12.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ffmm1"]
+radius = 6.0
+height = 14.0
+
+[node name="ShooterEnemyTemp" type="CharacterBody2D" groups=["Enemy"]]
+script = ExtResource("1_wci6c")
+GroupsToHit = PackedStringArray("Ally")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_n2k4x")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cfo2s")
+metadata/_edit_lock_ = true
+
+[node name="Weapon" parent="." instance=ExtResource("3_8qwsh")]
+position = Vector2(11, 0)
+scale = Vector2(0.75, 0.75)
+FiringRate = 0.3
+MagazineCapacity = 3
+ReloadTime = 4.0
+BulletSpeed = 75.0
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("4_6qj8n")
+metadata/_edit_lock_ = true
+
+[node name="IDLE" type="Node2D" parent="StateMachine"]
+script = ExtResource("5_48fag")
+metadata/_edit_lock_ = true
+
+[node name="MOVING" type="Node2D" parent="StateMachine"]
+script = ExtResource("6_2elgc")
+metadata/_edit_lock_ = true
+
+[node name="MoveComponent" parent="StateMachine/MOVING" instance=ExtResource("7_cv1bp")]
+Speed = 1000.0
+Acceleration = 0.7
+Desceleration = 0.5
+metadata/_edit_lock_ = true
+
+[node name="HealthComponent" parent="." instance=ExtResource("8_vwn6f")]
+MaxHealth = 3
+metadata/_edit_lock_ = true
+
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("9_ffts0")]
+HealthComponent = NodePath("../HealthComponent")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CapsuleShape2D_ffmm1")
+metadata/_edit_lock_ = true

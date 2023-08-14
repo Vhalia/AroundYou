@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c60js0jk2kfs3"]
+
+[ext_resource type="LabelSettings" uid="uid://bvens70kx47q" path="res://Assets/LabelSettings/lifeTextLabel.tres" id="1_41inp"]
+[ext_resource type="Script" path="res://Scripts/Ui/Player/PlayerLife.cs" id="1_y40pf"]
+
+[node name="PlayerLife" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_y40pf")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CurrentHealth" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("1_41inp")
+
+[node name="Slash" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "/"
+label_settings = ExtResource("1_41inp")
+
+[node name="MaxHealth" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+label_settings = ExtResource("1_41inp")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://xonqrle4ra4b"]
+
+[ext_resource type="PackedScene" uid="uid://e2jd5qyk4o4h" path="res://Scenes/bullet.tscn" id="1_q1gd1"]
+[ext_resource type="Shader" path="res://Assets/Shaders/enemyBullet.gdshader" id="2_7pugn"]
+[ext_resource type="Texture2D" uid="uid://xc0fefhvxygw" path="res://Assets/enemy_bullet.png" id="2_to8ea"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4kjos"]
+shader = ExtResource("2_7pugn")
+shader_parameter/color = Color(1, 0.14902, 0.141176, 0.537255)
+
+[node name="EnemyBullet" instance=ExtResource("1_q1gd1")]
+scale = Vector2(0.65, 0.65)
+
+[node name="Sprite2D" parent="." index="1"]
+material = SubResource("ShaderMaterial_4kjos")
+texture = ExtResource("2_to8ea")

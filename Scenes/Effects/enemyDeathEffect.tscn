@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dukqjln2q1hot"]
+
+[ext_resource type="Texture2D" uid="uid://bnd135q81xcdc" path="res://Assets/die_anim.png" id="1_78b8c"]
+[ext_resource type="PackedScene" uid="uid://dvwbtymfjl4l0" path="res://Scenes/Effects/effect.tscn" id="1_nrry7"]
+
+[node name="DeathEffect" instance=ExtResource("1_nrry7")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="1"]
+texture = ExtResource("1_78b8c")
+hframes = 8
+frame = 7
