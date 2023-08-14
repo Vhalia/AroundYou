@@ -1,6 +1,4 @@
-using AroundYou.Scripts;
 using Godot;
-using System;
 
 public partial class MoveComponent : Node2D
 {
@@ -20,21 +18,16 @@ public partial class MoveComponent : Node2D
 
     public void Move(Vector2 direction, double delta)
     {
-        if (direction != Vector2.Zero)
-        {
-            CharacterBody.Velocity = new Vector2(
+        CharacterBody.Velocity = direction != Vector2.Zero
+            ? new Vector2(
                 (float)Mathf.Lerp(CharacterBody.Velocity.X, direction.X * Speed * delta, Acceleration),
                 (float)Mathf.Lerp(CharacterBody.Velocity.Y, direction.Y * Speed * delta, Acceleration)
-            );
-        }
-        else
-        {
-            CharacterBody.Velocity = new Vector2(
+            )
+            : new Vector2(
                 (float)Mathf.Lerp(CharacterBody.Velocity.X, 0, Desceleration),
                 (float)Mathf.Lerp(CharacterBody.Velocity.Y, 0, Desceleration)
             );
-        }
 
-        CharacterBody.MoveAndSlide();
+        _ = CharacterBody.MoveAndSlide();
     }
 }

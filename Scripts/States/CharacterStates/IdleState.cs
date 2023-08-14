@@ -1,7 +1,6 @@
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 
 namespace AroundYou.Scripts.States.CharacterStates;
 public partial class IdleState : State
@@ -29,7 +28,7 @@ public partial class IdleState : State
 
     public override void Update(double delta)
     {
-        
+
     }
 
     public override void FixedUpdate(double delta)

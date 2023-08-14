@@ -39,7 +39,7 @@ public partial class DebugDisplay : Control
     {
         _valuePerTitle["PlayerPosition"].Text =
             new Vector2(
-                (float)Math.Round(Player.GlobalPosition.X,2),
+                (float)Math.Round(Player.GlobalPosition.X, 2),
                 (float)Math.Round(Player.GlobalPosition.Y, 2))
             .ToString();
         _valuePerTitle["DirectorUnits"].Text = Director.Units.ToString();
@@ -61,14 +61,15 @@ public partial class DebugDisplay : Control
             GridContainer.AddChild(InitLabel(title + ": "));
             GridContainer.AddChild(value);
         }
-        
     }
 
     private Label InitLabel(string value)
     {
-        Label label = new();
-        label.Text = value;
-        label.LabelSettings = LabelSettings;
+        Label label = new()
+        {
+            Text = value,
+            LabelSettings = LabelSettings
+        };
 
         return label;
     }

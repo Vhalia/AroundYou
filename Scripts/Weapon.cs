@@ -1,11 +1,8 @@
-using AroundYou.Scripts;
-using AroundYou.Scripts.Singleton;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 public partial class Weapon : Node2D
 {
@@ -37,7 +34,7 @@ public partial class Weapon : Node2D
     public Stack<Bullet> Bullets;
 
     public int _munitionsInMagazine;
-    public int MunitionsInMagazine { get { return _munitionsInMagazine; } set { SetMunitionsInMagazine(value); } }
+    public int MunitionsInMagazine { get => _munitionsInMagazine; set => SetMunitionsInMagazine(value); }
     public bool CanShoot => MunitionsInMagazine > 0 && FiringRateTimer.IsStopped() && ReloadTimer.IsStopped();
 
     [Signal]
@@ -64,14 +61,14 @@ public partial class Weapon : Node2D
         if (CanShoot)
         {
             AnimatedSprite?.Play("shoot");
-            for (var i = 0; i < NumberOfBulletsPerShot; i++)
+            for (int i = 0; i < NumberOfBulletsPerShot; i++)
             {
                 Bullet bullet = Bullets.Pop();
                 bullet.Init(Damage, BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition, groupsToHit);
                 GetTree().CurrentScene.AddChild(bullet);
             }
             MunitionsInMagazine--;
-            
+
             FiringRateTimer.Start();
         }
         else if (MunitionsInMagazine == 0 && ReloadTimer.IsStopped())
@@ -83,14 +80,14 @@ public partial class Weapon : Node2D
 
     public void Reload()
     {
-        EmitSignal(SignalName.Reloading, ReloadTime);
+        _ = EmitSignal(SignalName.Reloading, ReloadTime);
         ReloadTimer.Start();
     }
 
     public void SetWeaponPositionAndRotation(Vector2 direction, Vector2 origin)
     {
-        var directionAngle = direction.Angle();
-        GlobalPosition = origin + new Vector2(Mathf.Cos(directionAngle), Mathf.Sin(directionAngle)) * 10f;
+        float directionAngle = direction.Angle();
+        GlobalPosition = origin + (new Vector2(Mathf.Cos(directionAngle), Mathf.Sin(directionAngle)) * 10f);
         //GlobalPosition = origin + direction * 10f; //same as
         FlipWeapon(directionAngle);
 
@@ -102,10 +99,14 @@ public partial class Weapon : Node2D
         if (Mathf.Abs(directionAngle) > MathF.PI / 2)
         {
             if (Mathf.Sign(Scale.Y) == 1)
+            {
                 Scale = new Vector2(Scale.X, -Scale.Y);
+            }
         }
         else
+        {
             Scale = new Vector2(Scale.X, Mathf.Abs(Scale.Y));
+        }
     }
 
     private void FillBullets()
@@ -121,7 +122,7 @@ public partial class Weapon : Node2D
     private void SetMunitionsInMagazine(int value)
     {
         _munitionsInMagazine = value;
-        EmitSignal(SignalName.BulletsInMagazineChanged, MunitionsInMagazine);
+        _ = EmitSignal(SignalName.BulletsInMagazineChanged, MunitionsInMagazine);
     }
 
     private void OnReloadTimerTimeout()

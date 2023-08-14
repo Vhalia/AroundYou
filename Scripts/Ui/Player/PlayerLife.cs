@@ -2,7 +2,6 @@ using AroundYou.Scripts.Singleton;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 
 public partial class PlayerLife : Control
 {
@@ -23,7 +22,10 @@ public partial class PlayerLife : Control
     private void OnPlayerHealthChanged(int amount)
     {
         if (string.IsNullOrEmpty(_maxHealth.Text))
+        {
             _maxHealth.Text = amount.ToString();
+        }
+
         _currentHealth.Text = amount.ToString();
     }
 }

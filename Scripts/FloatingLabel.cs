@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class FloatingLabel : Label
 {
@@ -19,6 +18,6 @@ public partial class FloatingLabel : Label
 
     private async void FloatingLabel_TreeExiting()
     {
-        await ToSignal(GetTree().CreateTimer(5f), "timeout");
+        _ = await ToSignal(GetTree().CreateTimer(5f), "timeout");
     }
 }

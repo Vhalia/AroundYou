@@ -1,11 +1,5 @@
-using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AroundYou.Scripts.Components
 {
@@ -22,7 +16,7 @@ namespace AroundYou.Scripts.Components
         public delegate void HealthChangedEventHandler(int amount);
 
         private int _currentHealth;
-        public int CurrentHealth { get { return _currentHealth; } set { SetCurrentHealth(value); } }
+        public int CurrentHealth { get => _currentHealth; set => SetCurrentHealth(value); }
         public bool IsDead => CurrentHealth <= 0;
 
         public override void _Ready()
@@ -39,17 +33,17 @@ namespace AroundYou.Scripts.Components
             {
                 if (DeathEffectScene != null)
                 {
-                    var deathEffect = DeathEffectScene.Instantiate<Effect>();
+                    Effect deathEffect = DeathEffectScene.Instantiate<Effect>();
                     deathEffect.Init(Owner as Node2D, "deathEffectAnim");
                 }
-                EmitSignal(SignalName.Died);
+                _ = EmitSignal(SignalName.Died);
             }
         }
 
         public void SetCurrentHealth(int value)
         {
-            _currentHealth = value;                 
-            EmitSignal(SignalName.HealthChanged, CurrentHealth);
+            _currentHealth = value;
+            _ = EmitSignal(SignalName.HealthChanged, CurrentHealth);
         }
     }
 }

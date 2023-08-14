@@ -1,9 +1,6 @@
-using AroundYou.Scripts;
-using AroundYou.Scripts.States;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 
 namespace AroundYou.Scripts.States.CharacterStates;
 public partial class MovingState : State
@@ -40,6 +37,8 @@ public partial class MovingState : State
     {
         MoveComponent.Move(Character.Direction, delta);
         if (Mathf.Abs(Character.Velocity.X) <= 0.5f && Mathf.Abs(Character.Velocity.Y) <= 0.5f)
+        {
             Character.StateMachine.ChangeState(GetNodeOrNull<State>("../IDLE"));
+        }
     }
 }

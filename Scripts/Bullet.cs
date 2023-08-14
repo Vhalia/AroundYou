@@ -1,8 +1,5 @@
 using AroundYou.Scripts;
-using AroundYou.Scripts.Components;
-using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +29,7 @@ public partial class Bullet : Area2D
         Damage = damage;
         Speed = speed;
         Direction = direction;
-        foreach(var group in groupsToHit)
+        foreach (string group in groupsToHit)
         {
             GroupsToHit.Add(group);
         }
@@ -40,7 +37,11 @@ public partial class Bullet : Area2D
 
     private void Bullet_BodyShapeEntered(Rid bodyRid, Node2D body, long bodyShapeIndex, long localShapeIndex)
     {
-        if (body == this) return;
+        if (body == this)
+        {
+            return;
+        }
+
         if (body.GetGroups().Any(g => GroupsToHit.Contains(g)))
         {
             if (body is Character)

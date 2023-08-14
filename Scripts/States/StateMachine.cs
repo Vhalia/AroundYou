@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace AroundYou.Scripts.States;
 
@@ -11,7 +10,10 @@ public partial class StateMachine : Node2D
     public void ChangeState(State newState)
     {
         if (newState == null)
+        {
             return;
+        }
+
         PreviousState = CurrentState;
         CurrentState = newState;
 
@@ -21,13 +23,11 @@ public partial class StateMachine : Node2D
 
     public override void _Process(double delta)
     {
-        if (CurrentState != null)
-            CurrentState.Update(delta);
+        CurrentState?.Update(delta);
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        if (CurrentState != null)
-            CurrentState.FixedUpdate(delta);
+        CurrentState?.FixedUpdate(delta);
     }
 }

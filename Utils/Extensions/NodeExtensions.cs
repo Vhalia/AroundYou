@@ -1,8 +1,8 @@
-﻿using Godot;
-using System.Reflection;
+﻿using AroundYou.Utils.Attributes;
+using Godot;
 using System;
-using AroundYou.Utils.Attributes;
 using System.Linq;
+using System.Reflection;
 
 namespace AroundYou.Utils.Extensions
 {
@@ -20,27 +20,30 @@ namespace AroundYou.Utils.Extensions
                 .GetType()
                 .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-            foreach (var f in info)
+            foreach (FieldInfo f in info)
             {
                 // Search for Node attribute
                 NodeAttribute attr = (NodeAttribute)Attribute.GetCustomAttribute(f, typeof(NodeAttribute));
                 if (attr != null)
                 {
                     // Get the node using NodePath and set the field value
-                    var nodeFound = node.GetNode(attr.nodePath);
+                    Node nodeFound = node.GetNode(attr.nodePath);
                     if (nodeFound != null)
+                    {
                         f.SetValue(node, nodeFound);
-
+                    }
                 }
             }
         }
 
         public static bool HasNode<T>(this Node node) where T : class
         {
-            foreach(Node child in node.GetChildren())
+            foreach (Node child in node.GetChildren())
             {
                 if (child is T)
+                {
                     return true;
+                }
             }
             return false;
         }
@@ -49,16 +52,17 @@ namespace AroundYou.Utils.Extensions
         {
             T found = GetNodeOrDefault<T>(node);
             result = null;
-            if (found != null)
-                return true;
-            return false;
+            return found != null;
         }
 
         public static bool IsInAnyGroup(this Node node, params string[] groups)
         {
-            foreach(var nodeGroup in groups)
+            foreach (string nodeGroup in groups)
             {
-                if (groups.Contains(nodeGroup)) return true;
+                if (groups.Contains(nodeGroup))
+                {
+                    return true;
+                }
             }
 
             return false;

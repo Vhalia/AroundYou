@@ -4,11 +4,10 @@ using AroundYou.Scripts.States;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 
 public partial class Enemy : Character
 {
-    [Node("HurtboxComponent")] 
+    [Node("HurtboxComponent")]
     public HurtboxComponent HurtboxComponent;
     [Node("FloatingTextComponent")]
     public FloatingTextComponent FloatingTextComponent;

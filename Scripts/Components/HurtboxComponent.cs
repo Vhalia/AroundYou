@@ -9,7 +9,11 @@ namespace AroundYou.Scripts.Components
 
         public void HandleEntityCollision(Node other, int damageAmount)
         {
-            if (other == GetParent()) return;
+            if (other == GetParent())
+            {
+                return;
+            }
+
             HealthComponent.LowerHealth(damageAmount);
         }
     }

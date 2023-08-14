@@ -35,10 +35,13 @@ public partial class MagazineUI : Control
             return;
         }
 
-        for (var i = bulletsTextureState.Length-1; i >= bulletsCount; i--)
+        for (int i = bulletsTextureState.Length - 1; i >= bulletsCount; i--)
         {
             if (bulletsTextureState[i] == EBulletState.Empty)
+            {
                 continue;
+            }
+
             TextureRect texture = BulletContainer.GetChild(i) as TextureRect;
             UpdateBulletTexture(texture, $"emptybullet{i}", EmptyBulletTexture);
             bulletsTextureState[i] = EBulletState.Empty;
@@ -47,7 +50,7 @@ public partial class MagazineUI : Control
 
     private void ResetFillBulletsTextures()
     {
-        for(var i = 0; i < bulletsTextureState.Length; i++)
+        for (int i = 0; i < bulletsTextureState.Length; i++)
         {
             TextureRect texture = BulletContainer.GetChild(i) as TextureRect;
             UpdateBulletTexture(texture, $"bullet{i}", BulletTexture);
@@ -58,7 +61,7 @@ public partial class MagazineUI : Control
     private void AddInitialBulletsTextures(int count)
     {
         bulletsTextureState = new EBulletState[count];
-        for (var i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             bulletsTextureState[i] = EBulletState.Fill;
             TextureRect newBulletTexture = CreateBulletTexture($"bullet{i}", BulletTexture);

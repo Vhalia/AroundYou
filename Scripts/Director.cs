@@ -3,12 +3,8 @@ using AroundYou.Models.Enums;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Model = AroundYou.Models;
 
 namespace AroundYou.Scripts
@@ -55,12 +51,12 @@ namespace AroundYou.Scripts
             Timer.Timeout += Timer_Timeout;
         }
 
-        
+
 
         private void PopulateEntities()
         {
-            var walkerEntity = new Model.Entity("walker", EEnemyType.WALKER, 10, 50, GD.Load<PackedScene>(_basePath + "walkerEnemy.tscn"));
-            var shooterEntity = new Model.Entity("shooter", EEnemyType.SHOOTER, 50, 10, GD.Load<PackedScene>(_basePath + "shooterEnemy.tscn"));
+            Entity walkerEntity = new("walker", EEnemyType.WALKER, 10, 50, GD.Load<PackedScene>(_basePath + "walkerEnemy.tscn"));
+            Entity shooterEntity = new("shooter", EEnemyType.SHOOTER, 50, 10, GD.Load<PackedScene>(_basePath + "shooterEnemy.tscn"));
             _entities = new()
             {
                walkerEntity,shooterEntity
@@ -74,14 +70,20 @@ namespace AroundYou.Scripts
 
         private void SpawnEntities()
         {
-            if (!_enableSpawn) return;
-            var possibleEntitiesToSpawn = _entities.Where(e => e.Cost <= Units).ToList();
+            if (!_enableSpawn)
+            {
+                return;
+            }
+
+            List<Entity> possibleEntitiesToSpawn = _entities.Where(e => e.Cost <= Units).ToList();
             while (possibleEntitiesToSpawn.Any())
             {
                 if (!_random.CanDoAction(_chanceToSpawnEnemies))
+                {
                     continue;
+                }
 
-                var randomIndex = _random.RandiRange(0, possibleEntitiesToSpawn.Count - 1);
+                int randomIndex = _random.RandiRange(0, possibleEntitiesToSpawn.Count - 1);
                 SpawnEntity(possibleEntitiesToSpawn.ElementAt(randomIndex));
                 possibleEntitiesToSpawn = possibleEntitiesToSpawn.Where(e => e.Cost <= Units).ToList();
             }
@@ -90,22 +92,22 @@ namespace AroundYou.Scripts
         private void SpawnEntity(Model.Entity entity)
         {
             Units -= entity.Cost;
-            var entityInstance = entity.Scene.Instantiate<Enemy>();
+            Enemy entityInstance = entity.Scene.Instantiate<Enemy>();
             entityInstance.Init(GenerateRandomPositionAroundPlayer());
-            GetTree().CurrentScene.CallDeferred(Node.MethodName.AddChild, entityInstance);
+            _ = GetTree().CurrentScene.CallDeferred(Node.MethodName.AddChild, entityInstance);
             _currentEntitiesSpawnedCount[entity.Name]++;
         }
 
         private void GainUnits()
         {
-            GD.Print("DIRECTOR :: Units gained: ", (int)_unitsGainedPerSecond * _secondsPassed * _difficultyScaleRate);
-            Units += (int) (_unitsGainedPerSecond * _secondsPassed * _difficultyScaleRate);
+            GD.Print("DIRECTOR :: Units gained: ", _unitsGainedPerSecond * _secondsPassed * _difficultyScaleRate);
+            Units += (int)(_unitsGainedPerSecond * _secondsPassed * _difficultyScaleRate);
         }
 
         private Vector2 GenerateRandomPositionAroundPlayer()
         {
             float randomAngle = _random.RandfRange(0f, Mathf.Tau);
-            return _player.GlobalPosition + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * _spawnDistanceFromPlayer;
+            return _player.GlobalPosition + (new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * _spawnDistanceFromPlayer);
         }
 
         #region EVENT HANDLERS

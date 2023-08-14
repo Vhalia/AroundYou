@@ -1,5 +1,4 @@
-﻿using AroundYou.Scripts.Components;
-using AroundYou.Utils.Attributes;
+﻿using AroundYou.Utils.Attributes;
 using Godot;
 
 namespace AroundYou.Scripts

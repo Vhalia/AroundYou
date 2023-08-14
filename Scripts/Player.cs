@@ -4,9 +4,6 @@ using AroundYou.Scripts.States;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
-using System.Drawing;
-using System.Reflection.Metadata;
 
 namespace AroundYou.Scripts;
 
@@ -21,7 +18,7 @@ public partial class Player : Character
     [Node("UI/ReloadBar")]
     public ReloadBar ReloadBar;
     [Node("Sprite2D")]
-    public Sprite2D Sprite;
+    public new Sprite2D Sprite;
 
     [Export(hint: PropertyHint.ArrayType)]
     public string[] GroupsToHit = new[] { "" };
@@ -48,7 +45,7 @@ public partial class Player : Character
     {
         base._Process(delta);
         Direction = new Vector2(Input.GetAxis("ui_left", "ui_right"), Input.GetAxis("ui_up", "ui_down")).Normalized();
-        AimingDirection = (GetGlobalMousePosition() - this.GlobalPosition).Normalized();
+        AimingDirection = (GetGlobalMousePosition() - GlobalPosition).Normalized();
         Weapon.SetWeaponPositionAndRotation(AimingDirection, GlobalPosition);
         if (Input.IsActionJustPressed("shoot"))
         {
@@ -90,7 +87,7 @@ public partial class Player : Character
     }
     private void Weapon_BulletsInMagazineChanged(int bulletsCount)
     {
-        this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.MagazineCapacity);
+        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.MagazineCapacity);
     }
 
     private void Weapon_Reloading(int reloadTime)
@@ -100,7 +97,7 @@ public partial class Player : Character
 
     private void HealthComponent_HealthChanged(int amount)
     {
-        this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.PlayerHealthChanged, amount);
+        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.PlayerHealthChanged, amount);
 
     }
 

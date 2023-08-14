@@ -12,15 +12,12 @@ namespace AroundYou.Models.Enums
     {
         public static string ToKey(this EEnemyType enemyType)
         {
-            switch(enemyType)
+            return enemyType switch
             {
-                case EEnemyType.WALKER:
-                    return "walkerEnemy";
-                case EEnemyType.SHOOTER:
-                    return "shooterEnemy";
-                default:
-                    throw new ArgumentException("Unknown enemy type");
-            }
+                EEnemyType.WALKER => "walkerEnemy",
+                EEnemyType.SHOOTER => "shooterEnemy",
+                _ => throw new ArgumentException("Unknown enemy type"),
+            };
         }
     }
 }

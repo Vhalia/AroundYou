@@ -1,7 +1,6 @@
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
-using System;
 
 public partial class ReloadBar : Control
 {
@@ -12,7 +11,7 @@ public partial class ReloadBar : Control
     {
         this.WireNodes();
     }
-    
+
     public void Play(int length)
     {
         AnimationPlayer.GetAnimation("Reload").Length = length;

@@ -1,9 +1,4 @@
-﻿using Godot;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AroundYou.Scripts.Singleton
 {
@@ -12,10 +7,11 @@ namespace AroundYou.Scripts.Singleton
         public Dictionary<string, object> Pool = new();
 
         public ObjectPooler _instance;
-        public ObjectPooler Instance {
-            get {
-                if (_instance == null)
-                    _instance = new ObjectPooler();
+        public ObjectPooler Instance
+        {
+            get
+            {
+                _instance ??= new ObjectPooler();
                 return _instance;
             }
         }

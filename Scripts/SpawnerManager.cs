@@ -43,12 +43,12 @@ public partial class SpawnerManager : Node2D
     }
 
     private void SpawnEnemies()
-    { 
-        Random random = new Random();
-        for (var i = 0; i < NbEnemiesToSpawn; i++)
+    {
+        Random random = new();
+        for (int i = 0; i < NbEnemiesToSpawn; i++)
         {
             Enemy shooterEnemy = SelectEnemyToSpawn(random);
-            var x = GenerateRandomPositionAroundPlayer(random);
+            Vector2 x = GenerateRandomPositionAroundPlayer(random);
             shooterEnemy.Init(x);
             GetTree().CurrentScene.AddChild(shooterEnemy);
         }
@@ -58,15 +58,12 @@ public partial class SpawnerManager : Node2D
     private Vector2 GenerateRandomPositionAroundPlayer(Random random)
     {
         float randomAngle = random.RandomBetween(0f, Mathf.Tau);
-        return Player.GlobalPosition + new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * SpawnDistanceFromPlayer;
+        return Player.GlobalPosition + (new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)) * SpawnDistanceFromPlayer);
     }
 
     private Enemy SelectEnemyToSpawn(Random random)
     {
-        var randomNum = random.RandomBetween(0, 100);
-        if (randomNum <= 33)
-            return ShooterEnemyScene.Instantiate<Enemy>();
-        
-        return WalkerEnemyScene.Instantiate<Enemy>();
+        int randomNum = random.RandomBetween(0, 100);
+        return randomNum <= 33 ? ShooterEnemyScene.Instantiate<Enemy>() : WalkerEnemyScene.Instantiate<Enemy>();
     }
 }
