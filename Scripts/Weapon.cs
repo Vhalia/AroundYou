@@ -30,7 +30,6 @@ public partial class Weapon : Node2D
     [Export]
     public float BulletSpeed = 3000f;
 
-
     public Stack<Bullet> Bullets;
 
     public int _munitionsInMagazine;
@@ -54,9 +53,11 @@ public partial class Weapon : Node2D
         ReloadTimer.WaitTime = ReloadTime;
 
         ReloadTimer.Timeout += OnReloadTimerTimeout;
+
+        CallDeferred(nameof(SetMunitionsInMagazine), MagazineCapacity);
     }
 
-    public void Shoot(Vector2 Direction, params string[] groupsToHit)
+    public void Shoot(Vector2 Direction)
     {
         if (CanShoot)
         {
@@ -64,7 +65,7 @@ public partial class Weapon : Node2D
             for (int i = 0; i < NumberOfBulletsPerShot; i++)
             {
                 Bullet bullet = Bullets.Pop();
-                bullet.Init(Damage, BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition, groupsToHit);
+                bullet.Init(Damage, BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition);
                 GetTree().CurrentScene.AddChild(bullet);
             }
             MunitionsInMagazine--;

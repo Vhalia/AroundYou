@@ -17,7 +17,7 @@ namespace AroundYou.Scripts
         {
             base.Chasing(other);
             Weapon.SetWeaponPositionAndRotation(Direction, GlobalPosition);
-            Weapon.Shoot(Direction, GroupsToHit);
+            Weapon.Shoot(Direction);
         }
     }
 }

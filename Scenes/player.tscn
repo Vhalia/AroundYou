@@ -23,7 +23,7 @@ height = 12.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_i1mvb"]
 radius = 5.0
-height = 12.0
+height = 14.0
 
 [sub_resource type="Animation" id="Animation_7d23j"]
 length = 0.2
@@ -102,8 +102,8 @@ states/walk/position = Vector2(564, 224)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_i71ws"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_25ltm"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_fels4")]
 
 [node name="Player" type="CharacterBody2D" groups=["Ally"]]
+collision_mask = 30
 script = ExtResource("1_gx3ts")
-GroupsToHit = PackedStringArray("Enemy")
 metadata/_edit_lock_ = true
 
 [node name="ShadowComponent" parent="." instance=ExtResource("2_v6xsr")]
@@ -114,11 +114,11 @@ scale = Vector2(0.75, 0.75)
 material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 22
+frame = 17
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+scale = Vector2(1, 0.92)
 shape = SubResource("CapsuleShape2D_1wkrb")
 metadata/_edit_lock_ = true
 
@@ -143,13 +143,12 @@ metadata/_edit_lock_ = true
 [node name="HealthComponent" parent="." instance=ExtResource("6_80qo5")]
 metadata/_edit_lock_ = true
 
-[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("7_f7u5k")]
-HealthComponent = NodePath("../HealthComponent")
+[node name="HurtboxComponent" parent="." instance=ExtResource("7_f7u5k")]
+collision_mask = 14
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_i1mvb")
-metadata/_edit_lock_ = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct1e0j6p0qqss"]
+[gd_scene load_steps=6 format=3 uid="uid://ct1e0j6p0qqss"]
 
 [ext_resource type="PackedScene" uid="uid://ca1nsv3meocmm" path="res://Scenes/States/StateMachine.tscn" id="1_7be5r"]
 [ext_resource type="PackedScene" uid="uid://cdvkxm41b7h23" path="res://Scenes/Components/ShadowComponent.tscn" id="1_jjj0b"]
@@ -6,22 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://cg7y6euk7rqy8" path="res://Scenes/Components/FloatingTextComponent.tscn" id="4_psltp"]
 [ext_resource type="PackedScene" uid="uid://cbfopf2ah4mxb" path="res://Scenes/Components/HurtboxComponent.tscn" id="4_u3pan"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bdbkv"]
-radius = 7.0
-height = 16.0
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h2vw7"]
-radius = 7.0
-height = 16.0
-
 [node name="Enemy" type="CharacterBody2D"]
+collision_mask = 19
 
 [node name="ShadowComponent" parent="." instance=ExtResource("1_jjj0b")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_bdbkv")
 
 [node name="StateMachine" parent="." instance=ExtResource("1_7be5r")]
 
@@ -29,9 +21,9 @@ shape = SubResource("CapsuleShape2D_bdbkv")
 MaxHealth = 5
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("4_u3pan")]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
-shape = SubResource("CapsuleShape2D_h2vw7")
 
 [node name="FloatingTextComponent" parent="." instance=ExtResource("4_psltp")]
 position = Vector2(1, -11)

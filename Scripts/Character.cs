@@ -15,6 +15,8 @@ namespace AroundYou.Scripts
         [Node("Sprite2D")]
         public Sprite2D Sprite;
 
+        [Export]
+        protected int ContactHitDamage = 1;
 
         public Vector2 Direction = Vector2.Zero;
 

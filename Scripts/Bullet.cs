@@ -1,14 +1,11 @@
 using AroundYou.Scripts;
 using Godot;
-using System.Collections.Generic;
-using System.Linq;
 
 public partial class Bullet : Area2D
 {
     public Vector2 Direction = Vector2.Zero;
     public float Speed;
     public int Damage;
-    public List<string> GroupsToHit = new();
 
     public override void _Ready()
     {
@@ -23,32 +20,20 @@ public partial class Bullet : Area2D
         }
     }
 
-    public void Init(int damage, float speed, Vector2 direction, Vector2 spawn, params string[] groupsToHit)
+    public void Init(int damage, float speed, Vector2 direction, Vector2 spawn)
     {
         GlobalPosition = spawn;
         Damage = damage;
         Speed = speed;
         Direction = direction;
-        foreach (string group in groupsToHit)
-        {
-            GroupsToHit.Add(group);
-        }
     }
 
     private void Bullet_BodyShapeEntered(Rid bodyRid, Node2D body, long bodyShapeIndex, long localShapeIndex)
     {
-        if (body == this)
+        if (body is Character)
         {
-            return;
+            (body as Character)?.TakeDamage(Damage);
         }
-
-        if (body.GetGroups().Any(g => GroupsToHit.Contains(g)))
-        {
-            if (body is Character)
-            {
-                (body as Character).TakeDamage(Damage);
-            }
-            QueueFree();
-        }
+        QueueFree();
     }
 }

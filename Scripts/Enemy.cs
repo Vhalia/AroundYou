@@ -14,9 +14,6 @@ public partial class Enemy : Character
 
     public Player Player;
 
-    [Export(hint: PropertyHint.ArrayType)]
-    public string[] GroupsToHit = new string[] { "" };
-
     public override void _Ready()
     {
         base._Ready();
@@ -59,6 +56,6 @@ public partial class Enemy : Character
 
     private void HurtboxComponent_BodyShapeEntered(Rid bodyRid, Node2D other, long bodyShapeIndex, long localShapeIndex)
     {
-        HurtboxComponent.HandleEntityCollision(other, 1);
+        HurtboxComponent.HandleCollision(other, ContactHitDamage);
     }
 }

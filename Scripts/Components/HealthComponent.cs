@@ -22,9 +22,8 @@ namespace AroundYou.Scripts.Components
         public override void _Ready()
         {
             this.WireNodes();
-            CurrentHealth = MaxHealth;
+            CallDeferred(nameof(SetCurrentHealth), MaxHealth);
         }
-
 
         public void LowerHealth(int amount)
         {

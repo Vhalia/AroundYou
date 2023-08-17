@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6l4wcse0lbip"]
+[gd_scene load_steps=14 format=3 uid="uid://6l4wcse0lbip"]
 
 [ext_resource type="Texture2D" uid="uid://du4lupf1wj05o" path="res://Assets/enemy.png" id="1_26iux"]
 [ext_resource type="PackedScene" uid="uid://ct1e0j6p0qqss" path="res://Scenes/enemy.tscn" id="1_l3vts"]
@@ -7,6 +7,10 @@
 [ext_resource type="Script" path="res://Scripts/States/CharacterStates/IdleState.cs" id="5_je0dj"]
 [ext_resource type="Script" path="res://Scripts/States/CharacterStates/MovingState.cs" id="6_0qmwj"]
 [ext_resource type="PackedScene" uid="uid://bb2dktmgdis4c" path="res://Scenes/Components/MoveComponent.tscn" id="7_cormy"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atiy2"]
+radius = 9.0
+height = 18.0
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ia1kh"]
 animation = &"moving"
@@ -42,8 +46,8 @@ _data = {
 }
 
 [node name="ShooterEnemy" groups=["Enemy"] instance=ExtResource("1_l3vts")]
+collision_layer = 2
 script = ExtResource("2_gkjhs")
-GroupsToHit = PackedStringArray("Ally")
 metadata/_edit_lock_ = true
 
 [node name="ShadowComponent" parent="." index="0"]
@@ -51,7 +55,7 @@ position = Vector2(0, 12)
 scale = Vector2(1.2, 1.2)
 
 [node name="Sprite2D" parent="." index="1"]
-position = Vector2(0, -0.508482)
+position = Vector2(0, 0.903133)
 texture = ExtResource("1_26iux")
 metadata/_edit_lock_ = true
 
@@ -63,6 +67,8 @@ ReloadTime = 3.0
 BulletSpeed = 75.0
 
 [node name="CollisionShape2D" parent="." index="3"]
+scale = Vector2(0.999999, 1)
+shape = SubResource("CapsuleShape2D_atiy2")
 metadata/_edit_lock_ = true
 
 [node name="StateMachine" parent="." index="4"]
@@ -82,12 +88,13 @@ Desceleration = 0.6
 MaxHealth = 3
 metadata/_edit_lock_ = true
 
-[node name="HurtboxComponent" parent="." index="6" node_paths=PackedStringArray("HealthComponent")]
-HealthComponent = NodePath("../HealthComponent")
+[node name="HurtboxComponent" parent="." index="6"]
+scale = Vector2(1.2, 1.4)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
-metadata/_edit_lock_ = true
+visible = false
+scale = Vector2(1.16667, 0.885715)
 
 [node name="FloatingTextComponent" parent="." index="7"]
 visible = false

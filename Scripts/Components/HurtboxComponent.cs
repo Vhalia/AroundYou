@@ -1,20 +1,19 @@
 ﻿using Godot;
+using System.Linq;
 
 namespace AroundYou.Scripts.Components
 {
     public partial class HurtboxComponent : Area2D
     {
-        [Export]
-        public HealthComponent HealthComponent;
-
-        public void HandleEntityCollision(Node other, int damageAmount)
+        public void HandleCollision(Node other, int? damageAmount = null)
         {
-            if (other == GetParent())
-            {
-                return;
-            }
+            if (other is Character && damageAmount.HasValue)
+                HandleCharacterCollision(damageAmount.Value);
+        }
 
-            HealthComponent.LowerHealth(damageAmount);
+        private void HandleCharacterCollision(int damageAmount)
+        {
+            (Owner as Character).TakeDamage(damageAmount);
         }
     }
 }

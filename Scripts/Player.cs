@@ -21,10 +21,6 @@ public partial class Player : Character
     [Node("Sprite2D")]
     public new Sprite2D Sprite;
 
-    [Export(hint: PropertyHint.ArrayType)]
-    public string[] GroupsToHit = new[] { "" };
-
-
     public Vector2 AimingDirection;
 
     public override void _Ready()
@@ -37,9 +33,6 @@ public partial class Player : Character
         Weapon.Reloading += Weapon_Reloading;
         Weapon.BulletsInMagazineChanged += Weapon_BulletsInMagazineChanged;
         HealthComponent.HealthChanged += HealthComponent_HealthChanged;
-
-        //Force call because weapon's ready is call before player's ready
-        Weapon_BulletsInMagazineChanged(Weapon.MunitionsInMagazine);
     }
 
     public override void _Process(double delta)
@@ -54,14 +47,9 @@ public partial class Player : Character
         }
     }
 
-    public override void TakeDamage(int amount)
-    {
-        base.TakeDamage(amount);
-    }
-
     public void Shoot(Vector2 direction)
     {
-        Weapon.Shoot(direction, GroupsToHit);
+        Weapon.Shoot(direction);
     }
 
     public override void SetFacingDirection()
@@ -80,6 +68,14 @@ public partial class Player : Character
         base.SetFacingDirection();
     }
 
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        HurtAnimation();
+    }
+
+
+
     #region TweenAnimations
 
     private void HurtAnimation()
@@ -96,7 +92,7 @@ public partial class Player : Character
     #region EventHandlers
     private void HurtboxComponent_BodyShapeEntered(Rid bodyRid, Node2D other, long bodyShapeIndex, long localShapeIndex)
     {
-        HurtboxComponent.HandleEntityCollision(other, 1);
+        HurtboxComponent.HandleCollision(other, ContactHitDamage);
     }
     private void Weapon_BulletsInMagazineChanged(int bulletsCount)
     {
@@ -111,7 +107,6 @@ public partial class Player : Character
     private void HealthComponent_HealthChanged(int amount)
     {
         _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.PlayerHealthChanged, amount);
-        HurtAnimation();
     }
 
     #endregion
