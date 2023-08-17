@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://qip3xaxsc38w"]
+[gd_scene load_steps=16 format=3 uid="uid://qip3xaxsc38w"]
 
 [ext_resource type="Texture2D" uid="uid://d0joqjjam4ilj" path="res://Assets/ground_0.png" id="1_i3lf7"]
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_pm8of"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://kl02cei2wdcx" path="res://Assets/bullet2.png" id="8_b1i42"]
 [ext_resource type="PackedScene" uid="uid://c60js0jk2kfs3" path="res://Scenes/UI/PlayerLife.tscn" id="8_l4b7c"]
 [ext_resource type="Texture2D" uid="uid://c5vg1pnquigxe" path="res://Assets/bullet2_empty.png" id="9_dhx58"]
+[ext_resource type="Shader" path="res://Scenes/hurtflash.gdshader" id="10_biv75"]
 [ext_resource type="Script" path="res://Scripts/Director.cs" id="10_qjim6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ixc7w"]
@@ -27,8 +28,10 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_ixc7w")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0n4e"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gtphm"]
 resource_local_to_scene = true
+shader = ExtResource("10_biv75")
+shader_parameter/flashState = 0.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_pm8of")
@@ -69,7 +72,7 @@ columns = 2
 [node name="PlayerLife" parent="UI" instance=ExtResource("8_l4b7c")]
 
 [node name="Player" parent="." instance=ExtResource("2_5ey7m")]
-material = SubResource("ShaderMaterial_y0n4e")
+material = SubResource("ShaderMaterial_gtphm")
 position = Vector2(159, 106)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -89,7 +92,7 @@ _difficultyScaleRate = 0.8
 _chanceToSpawnEnemies = 1.0
 
 [node name="Timer" type="Timer" parent="Director"]
-wait_time = 10.0
+wait_time = 5.0
 autostart = true
 
 [node name="OnQueue" type="Node2D" parent="."]

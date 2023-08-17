@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://css6qp7qb8bf3"]
+[gd_scene load_steps=14 format=3 uid="uid://css6qp7qb8bf3"]
 
 [ext_resource type="PackedScene" uid="uid://ct1e0j6p0qqss" path="res://Scenes/enemy.tscn" id="1_ql3td"]
 [ext_resource type="Script" path="res://Scripts/Enemy.cs" id="2_6bvr8"]
@@ -17,8 +17,6 @@ advance_mode = 2
 states/moving/node = SubResource("AnimationNodeAnimation_a3afx")
 states/moving/position = Vector2(421, 114)
 transitions = ["Start", "moving", SubResource("AnimationNodeStateMachineTransition_6ylyw")]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_su7io"]
 
 [sub_resource type="Animation" id="Animation_kftxt"]
 length = 0.001
@@ -99,7 +97,6 @@ visible = false
 tree_root = SubResource("AnimationNodeStateMachine_ygbkm")
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_su7io")
 
 [node name="AnimationPlayer" parent="." index="8"]
 autoplay = "moving"

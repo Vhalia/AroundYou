@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6l4wcse0lbip"]
+[gd_scene load_steps=13 format=3 uid="uid://6l4wcse0lbip"]
 
 [ext_resource type="Texture2D" uid="uid://du4lupf1wj05o" path="res://Assets/enemy.png" id="1_26iux"]
 [ext_resource type="PackedScene" uid="uid://ct1e0j6p0qqss" path="res://Scenes/enemy.tscn" id="1_l3vts"]
@@ -18,8 +18,6 @@ advance_mode = 2
 states/moving/node = SubResource("AnimationNodeAnimation_ia1kh")
 states/moving/position = Vector2(388, 116)
 transitions = ["Start", "moving", SubResource("AnimationNodeStateMachineTransition_1jolh")]
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_thr0m"]
 
 [sub_resource type="Animation" id="Animation_uks8x"]
 resource_name = "moving"
@@ -98,7 +96,6 @@ visible = false
 tree_root = SubResource("AnimationNodeStateMachine_rftwy")
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_thr0m")
 
 [node name="AnimationPlayer" parent="." index="9"]
 libraries = {
