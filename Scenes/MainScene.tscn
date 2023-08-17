@@ -28,7 +28,7 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_ixc7w")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gtphm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_362qr"]
 resource_local_to_scene = true
 shader = ExtResource("10_biv75")
 shader_parameter/flashState = 0.0
@@ -72,7 +72,7 @@ columns = 2
 [node name="PlayerLife" parent="UI" instance=ExtResource("8_l4b7c")]
 
 [node name="Player" parent="." instance=ExtResource("2_5ey7m")]
-material = SubResource("ShaderMaterial_gtphm")
+material = SubResource("ShaderMaterial_362qr")
 position = Vector2(159, 106)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

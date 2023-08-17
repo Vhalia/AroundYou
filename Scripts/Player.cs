@@ -4,6 +4,7 @@ using AroundYou.Scripts.States;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
 using Godot;
+using System.Runtime.CompilerServices;
 
 namespace AroundYou.Scripts;
 
@@ -56,7 +57,6 @@ public partial class Player : Character
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        AnimationPlayer.Play("hurt");
     }
 
     public void Shoot(Vector2 direction)
@@ -80,6 +80,19 @@ public partial class Player : Character
         base.SetFacingDirection();
     }
 
+    #region TweenAnimations
+
+    private void HurtAnimation()
+    {
+        var tween = CreateTween();
+        tween.SetLoops(3);
+
+        tween.TweenProperty(Sprite.Material, "shader_parameter/state", 1, 0.15);
+        tween.TweenProperty(Sprite.Material, "shader_parameter/state", 0, 0.15);
+    }
+
+    #endregion
+
     #region EventHandlers
     private void HurtboxComponent_BodyShapeEntered(Rid bodyRid, Node2D other, long bodyShapeIndex, long localShapeIndex)
     {
@@ -98,7 +111,7 @@ public partial class Player : Character
     private void HealthComponent_HealthChanged(int amount)
     {
         _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.PlayerHealthChanged, amount);
-
+        HurtAnimation();
     }
 
     #endregion

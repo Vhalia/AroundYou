@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dns5ricq4bmh5"]
+[gd_scene load_steps=27 format=3 uid="uid://dns5ricq4bmh5"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_gx3ts"]
 [ext_resource type="PackedScene" uid="uid://cdvkxm41b7h23" path="res://Scenes/Components/ShadowComponent.tscn" id="2_v6xsr"]
@@ -13,12 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cbfopf2ah4mxb" path="res://Scenes/Components/HurtboxComponent.tscn" id="7_f7u5k"]
 [ext_resource type="PackedScene" uid="uid://d0ilg2n5covja" path="res://Scenes/UI/reloadBar.tscn" id="12_5dukd"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f2o28"]
-resource_local_to_scene = true
-shader = ExtResource("3_fvxm5")
-shader_parameter/state = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p4dhj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_doo5q"]
 shader = ExtResource("3_fvxm5")
 shader_parameter/state = 0.0
 
@@ -31,36 +26,13 @@ radius = 5.0
 height = 12.0
 
 [sub_resource type="Animation" id="Animation_7d23j"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:material:shader_parameter/state")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
+length = 0.2
+loop_mode = 1
 
 [sub_resource type="Animation" id="Animation_kdjjk"]
 resource_name = "flashAnimation"
-length = 1.5
+length = 0.2
 loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:material:shader_parameter/state")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1, 1.25, 1.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
-}
 
 [sub_resource type="Animation" id="Animation_j8oic"]
 resource_name = "idle"
@@ -130,7 +102,6 @@ states/walk/position = Vector2(564, 224)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_i71ws"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_25ltm"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_fels4")]
 
 [node name="Player" type="CharacterBody2D" groups=["Ally"]]
-material = SubResource("ShaderMaterial_f2o28")
 script = ExtResource("1_gx3ts")
 GroupsToHit = PackedStringArray("Enemy")
 metadata/_edit_lock_ = true
@@ -140,10 +111,10 @@ position = Vector2(-0.5, 7)
 scale = Vector2(0.75, 0.75)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_p4dhj")
+material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 21
+frame = 22
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
