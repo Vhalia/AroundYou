@@ -23,9 +23,11 @@ public partial class Enemy : Character
 
         HurtboxComponent.BodyShapeEntered += HurtboxComponent_BodyShapeEntered;
         HealthComponent.Died += HealthComponent_Died;
+        HealthComponent.Damaged += HealthComponent_Damaged;
 
         StateMachine.ChangeState(GetNodeOrNull<State>("StateMachine/IDLE"));
     }
+
 
     public override void _Process(double delta)
     {
@@ -36,12 +38,6 @@ public partial class Enemy : Character
     public void Init(Vector2 spawnPosition)
     {
         GlobalPosition = spawnPosition;
-    }
-
-    public override void TakeDamage(int amount)
-    {
-        base.TakeDamage(amount);
-        FloatingTextComponent.DisplayDamageNumber(amount);
     }
 
     public virtual void Chasing(Node2D other)
@@ -57,5 +53,9 @@ public partial class Enemy : Character
     private void HurtboxComponent_BodyShapeEntered(Rid bodyRid, Node2D other, long bodyShapeIndex, long localShapeIndex)
     {
         HurtboxComponent.HandleCollision(other, ContactHitDamage);
+    }
+    private void HealthComponent_Damaged(float amount)
+    {
+        FloatingTextComponent.DisplayDamageNumber(amount);
     }
 }

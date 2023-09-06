@@ -11,7 +11,7 @@ public partial class FloatingTextComponent : Node2D
         this.WireNodes();
     }
 
-    public void DisplayDamageNumber(int amount)
+    public void DisplayDamageNumber(float amount)
     {
         if (FloatingTextEffect == null)
         {

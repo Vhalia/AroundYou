@@ -47,18 +47,22 @@ animations = [{
 }]
 
 [node name="Revolver" instance=ExtResource("1_duwev")]
-FiringRate = 0.1
-MagazineCapacity = 6
-Damage = 2
 metadata/_edit_lock_ = true
 
 [node name="Bullet" parent="." index="0" instance=ExtResource("2_434oh")]
 visible = false
 
-[node name="BulletSpawnMarker" parent="." index="3"]
+[node name="StatsComponent" parent="." index="1"]
+_damage = 2
+_magazineCapacity = 7
+_shotSpeed = 3
+_bulletSpeed = 300
+_bulletsPerShot = 1
+
+[node name="BulletSpawnMarker" parent="." index="4"]
 position = Vector2(7, -1)
 gizmo_extents = 3.0
 
-[node name="AnimatedSprite2D" parent="." index="4"]
+[node name="AnimatedSprite2D" parent="." index="5"]
 sprite_frames = SubResource("SpriteFrames_e1faj")
 animation = &"shoot"

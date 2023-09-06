@@ -19,7 +19,7 @@ public partial class PlayerLife : Control
 
     }
 
-    private void OnPlayerHealthChanged(int amount)
+    private void OnPlayerHealthChanged(float amount)
     {
         if (string.IsNullOrEmpty(_maxHealth.Text))
         {

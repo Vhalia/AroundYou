@@ -85,8 +85,8 @@ script = ExtResource("4_fo0ne")
 [node name="MOVING" type="Node2D" parent="StateMachine" index="1"]
 script = ExtResource("3_ex16o")
 
-[node name="MoveComponent" parent="StateMachine/MOVING" index="0" instance=ExtResource("4_lhahn")]
-Speed = 1500.0
+[node name="MoveComponent" parent="StateMachine/MOVING" index="0" node_paths=PackedStringArray("StatsComponent") instance=ExtResource("4_lhahn")]
+StatsComponent = NodePath("../../../StatsComponent")
 Acceleration = 0.3
 Desceleration = 0.5
 
@@ -96,12 +96,16 @@ visible = false
 [node name="FloatingTextComponent" parent="." index="6"]
 visible = false
 
-[node name="AnimationTree" parent="." index="7"]
+[node name="StatsComponent" parent="." index="7"]
+_maxHealth = 5
+_movementSpeed = 1000
+
+[node name="AnimationTree" parent="." index="8"]
 tree_root = SubResource("AnimationNodeStateMachine_ygbkm")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 
-[node name="AnimationPlayer" parent="." index="8"]
+[node name="AnimationPlayer" parent="." index="9"]
 autoplay = "moving"
 libraries = {
 "": SubResource("AnimationLibrary_yr7yf")

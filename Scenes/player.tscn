@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dns5ricq4bmh5"]
+[gd_scene load_steps=28 format=3 uid="uid://dns5ricq4bmh5"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_gx3ts"]
 [ext_resource type="PackedScene" uid="uid://cdvkxm41b7h23" path="res://Scenes/Components/ShadowComponent.tscn" id="2_v6xsr"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://oqpijohaay4c" path="res://Scenes/Components/HealthComponent.tscn" id="6_80qo5"]
 [ext_resource type="PackedScene" uid="uid://cbfopf2ah4mxb" path="res://Scenes/Components/HurtboxComponent.tscn" id="7_f7u5k"]
 [ext_resource type="PackedScene" uid="uid://d0ilg2n5covja" path="res://Scenes/UI/reloadBar.tscn" id="12_5dukd"]
+[ext_resource type="PackedScene" uid="uid://bx1ppmqios0nm" path="res://Scenes/Components/StatsComponent.tscn" id="12_wpkuv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_doo5q"]
 shader = ExtResource("3_fvxm5")
@@ -114,7 +115,7 @@ scale = Vector2(0.75, 0.75)
 material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 17
+frame = 16
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -137,10 +138,12 @@ metadata/_edit_lock_ = true
 script = ExtResource("5_xldna")
 metadata/_edit_lock_ = true
 
-[node name="MoveComponent" parent="StateMachine/MOVING" instance=ExtResource("6_5e8cl")]
+[node name="MoveComponent" parent="StateMachine/MOVING" node_paths=PackedStringArray("StatsComponent") instance=ExtResource("6_5e8cl")]
+StatsComponent = NodePath("../../../StatsComponent")
 metadata/_edit_lock_ = true
 
-[node name="HealthComponent" parent="." instance=ExtResource("6_80qo5")]
+[node name="HealthComponent" parent="." node_paths=PackedStringArray("StatsComponent") instance=ExtResource("6_80qo5")]
+StatsComponent = NodePath("../StatsComponent")
 metadata/_edit_lock_ = true
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("7_f7u5k")]
@@ -149,6 +152,13 @@ metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("CapsuleShape2D_i1mvb")
+
+[node name="StatsComponent" parent="." instance=ExtResource("12_wpkuv")]
+_maxHealth = 25
+_healthRegeneration = 0.5
+_armor = 10
+_evasion = 0.25
+_movementSpeed = 5000
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -48,10 +48,18 @@ BulletScene = ExtResource("2_5k73h")
 [node name="EnemyBullet" parent="." index="0" instance=ExtResource("2_5k73h")]
 visible = false
 
-[node name="BulletSpawnMarker" parent="." index="3"]
+[node name="StatsComponent" parent="." index="1"]
+_damage = 1
+_magazineCapacity = 2
+_shotSpeed = 2
+_bulletSpeed = 50
+_reloadTime = 2
+_bulletsPerShot = 1
+
+[node name="BulletSpawnMarker" parent="." index="4"]
 position = Vector2(8, 0)
 
-[node name="AnimatedSprite2D" parent="." index="4"]
+[node name="AnimatedSprite2D" parent="." index="5"]
 sprite_frames = SubResource("SpriteFrames_3p0y6")
 animation = &"shoot"
 frame = 1

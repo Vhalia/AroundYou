@@ -33,7 +33,9 @@ public partial class Player : Character
         Weapon.Reloading += Weapon_Reloading;
         Weapon.BulletsInMagazineChanged += Weapon_BulletsInMagazineChanged;
         HealthComponent.HealthChanged += HealthComponent_HealthChanged;
+        HealthComponent.Damaged += HealthComponent_Damaged;
     }
+
 
     public override void _Process(double delta)
     {
@@ -68,14 +70,6 @@ public partial class Player : Character
         base.SetFacingDirection();
     }
 
-    public override void TakeDamage(int amount)
-    {
-        base.TakeDamage(amount);
-        HurtAnimation();
-    }
-
-
-
     #region TweenAnimations
 
     private void HurtAnimation()
@@ -96,7 +90,7 @@ public partial class Player : Character
     }
     private void Weapon_BulletsInMagazineChanged(int bulletsCount)
     {
-        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.MagazineCapacity);
+        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.StatsComponent.MagazineCapacity);
     }
 
     private void Weapon_Reloading(int reloadTime)
@@ -104,9 +98,13 @@ public partial class Player : Character
         ReloadBar.Play(reloadTime);
     }
 
-    private void HealthComponent_HealthChanged(int amount)
+    private void HealthComponent_HealthChanged(float amount)
     {
         _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.PlayerHealthChanged, amount);
+    }
+    private void HealthComponent_Damaged(float amount)
+    {
+        HurtAnimation();
     }
 
     #endregion

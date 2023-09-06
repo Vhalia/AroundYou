@@ -55,16 +55,12 @@ position = Vector2(0, 12)
 scale = Vector2(1.2, 1.2)
 
 [node name="Sprite2D" parent="." index="1"]
-position = Vector2(0, 0.903133)
+position = Vector2(0, 0.05051)
 texture = ExtResource("1_26iux")
 metadata/_edit_lock_ = true
 
 [node name="Weapon" parent="." index="2" instance=ExtResource("4_vr1de")]
 position = Vector2(12, 0)
-FiringRate = 0.3
-MagazineCapacity = 1
-ReloadTime = 3.0
-BulletSpeed = 75.0
 
 [node name="CollisionShape2D" parent="." index="3"]
 scale = Vector2(0.999999, 1)
@@ -80,12 +76,11 @@ script = ExtResource("5_je0dj")
 [node name="MOVING" type="Node2D" parent="StateMachine" index="1"]
 script = ExtResource("6_0qmwj")
 
-[node name="MoveComponent" parent="StateMachine/MOVING" index="0" instance=ExtResource("7_cormy")]
-Speed = 750.0
+[node name="MoveComponent" parent="StateMachine/MOVING" index="0" node_paths=PackedStringArray("StatsComponent") instance=ExtResource("7_cormy")]
+StatsComponent = NodePath("../../../StatsComponent")
 Desceleration = 0.6
 
 [node name="HealthComponent" parent="." index="5"]
-MaxHealth = 3
 metadata/_edit_lock_ = true
 
 [node name="HurtboxComponent" parent="." index="6"]
@@ -99,12 +94,16 @@ scale = Vector2(1.16667, 0.885715)
 [node name="FloatingTextComponent" parent="." index="7"]
 visible = false
 
-[node name="AnimationTree" parent="." index="8"]
+[node name="StatsComponent" parent="." index="8"]
+_maxHealth = 3
+_movementSpeed = 500
+
+[node name="AnimationTree" parent="." index="9"]
 tree_root = SubResource("AnimationNodeStateMachine_rftwy")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 
-[node name="AnimationPlayer" parent="." index="9"]
+[node name="AnimationPlayer" parent="." index="10"]
 libraries = {
 "": SubResource("AnimationLibrary_itwmj")
 }

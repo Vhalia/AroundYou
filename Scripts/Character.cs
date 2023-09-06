@@ -25,7 +25,7 @@ namespace AroundYou.Scripts
             this.WireNodes();
         }
 
-        public virtual void TakeDamage(int amount)
+        public virtual void TakeDamage(float amount)
         {
             HealthComponent.LowerHealth(amount);
         }

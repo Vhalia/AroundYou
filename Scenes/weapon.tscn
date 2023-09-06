@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bc5ryiki2f6hg"]
+[gd_scene load_steps=4 format=3 uid="uid://bc5ryiki2f6hg"]
 
 [ext_resource type="Script" path="res://Scripts/Weapon.cs" id="1_p3yna"]
 [ext_resource type="PackedScene" uid="uid://e2jd5qyk4o4h" path="res://Scenes/bullet.tscn" id="2_ph147"]
+[ext_resource type="PackedScene" uid="uid://bx1ppmqios0nm" path="res://Scenes/Components/StatsComponent.tscn" id="3_47pd5"]
 
 [node name="Weapon" type="Node2D"]
 script = ExtResource("1_p3yna")
 BulletScene = ExtResource("2_ph147")
-FiringRate = 0.2
-BulletSpeed = 200.0
+
+[node name="StatsComponent" parent="." instance=ExtResource("3_47pd5")]
+_reloadTime = 1
 
 [node name="FiringRateTimer" type="Timer" parent="."]
 one_shot = true

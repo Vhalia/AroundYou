@@ -7,7 +7,7 @@ namespace AroundYou.Scripts.Singleton
         [Signal]
         public delegate void BulletsInMagazineChangedEventHandler(int bulletsCount, int maxBullets);
         [Signal]
-        public delegate void PlayerHealthChangedEventHandler(int amount);
+        public delegate void PlayerHealthChangedEventHandler(float amount);
 
     }
 }

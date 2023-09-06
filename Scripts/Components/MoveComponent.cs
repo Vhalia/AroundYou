@@ -3,7 +3,7 @@ using Godot;
 public partial class MoveComponent : Node2D
 {
     [Export]
-    public float Speed = 30;
+    public StatsComponent StatsComponent;
     [Export]
     public float Acceleration = 0.5f;
     [Export]
@@ -20,8 +20,8 @@ public partial class MoveComponent : Node2D
     {
         CharacterBody.Velocity = direction != Vector2.Zero
             ? new Vector2(
-                (float)Mathf.Lerp(CharacterBody.Velocity.X, direction.X * Speed * delta, Acceleration),
-                (float)Mathf.Lerp(CharacterBody.Velocity.Y, direction.Y * Speed * delta, Acceleration)
+                (float)Mathf.Lerp(CharacterBody.Velocity.X, direction.X * StatsComponent.MovementSpeed * delta, Acceleration),
+                (float)Mathf.Lerp(CharacterBody.Velocity.Y, direction.Y * StatsComponent.MovementSpeed * delta, Acceleration)
             )
             : new Vector2(
                 (float)Mathf.Lerp(CharacterBody.Velocity.X, 0, Desceleration),

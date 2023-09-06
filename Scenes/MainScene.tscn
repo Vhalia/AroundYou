@@ -83,7 +83,7 @@ script = ExtResource("3_jnobm")
 
 [node name="Director" type="Node2D" parent="." node_paths=PackedStringArray("_player")]
 script = ExtResource("10_qjim6")
-Units = 20
+Units = 150
 _unitsGainedPerSecond = 5
 _spawnDistanceFromPlayer = 200
 _player = NodePath("../Player")
@@ -94,5 +94,3 @@ _chanceToSpawnEnemies = 1.0
 [node name="Timer" type="Timer" parent="Director"]
 wait_time = 5.0
 autostart = true
-
-[node name="OnQueue" type="Node2D" parent="."]

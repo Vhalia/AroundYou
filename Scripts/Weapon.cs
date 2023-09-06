@@ -14,21 +14,11 @@ public partial class Weapon : Node2D
     public Marker2D BulletSpawnMarker;
     [Node("AnimatedSprite2D")]
     public AnimatedSprite2D AnimatedSprite;
+    [Node("StatsComponent")]
+    public StatsComponent StatsComponent;
 
     [Export]
     public PackedScene BulletScene;
-    [Export]
-    public float FiringRate = 1f;
-    [Export]
-    public int NumberOfBulletsPerShot = 1;
-    [Export]
-    public int MagazineCapacity = 30;
-    [Export]
-    public float ReloadTime = 1f;
-    [Export]
-    public int Damage = 1;
-    [Export]
-    public float BulletSpeed = 3000f;
 
     public Stack<Bullet> Bullets;
 
@@ -49,12 +39,12 @@ public partial class Weapon : Node2D
         Bullets = new Stack<Bullet>();
         FillBullets();
 
-        FiringRateTimer.WaitTime = FiringRate;
-        ReloadTimer.WaitTime = ReloadTime;
+        FiringRateTimer.WaitTime = DetermineFireRateTime();
+        ReloadTimer.WaitTime = StatsComponent.ReloadTime;
 
         ReloadTimer.Timeout += OnReloadTimerTimeout;
 
-        CallDeferred(nameof(SetMunitionsInMagazine), MagazineCapacity);
+        CallDeferred(nameof(SetMunitionsInMagazine), StatsComponent.MagazineCapacity);
     }
 
     public void Shoot(Vector2 Direction)
@@ -62,10 +52,10 @@ public partial class Weapon : Node2D
         if (CanShoot)
         {
             AnimatedSprite?.Play("shoot");
-            for (int i = 0; i < NumberOfBulletsPerShot; i++)
+            for (int i = 0; i < StatsComponent.BulletsPerShot; i++)
             {
                 Bullet bullet = Bullets.Pop();
-                bullet.Init(Damage, BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition);
+                bullet.Init(StatsComponent.Damage, StatsComponent.BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition);
                 GetTree().CurrentScene.AddChild(bullet);
             }
             MunitionsInMagazine--;
@@ -81,7 +71,7 @@ public partial class Weapon : Node2D
 
     public void Reload()
     {
-        _ = EmitSignal(SignalName.Reloading, ReloadTime);
+        _ = EmitSignal(SignalName.Reloading, StatsComponent.ReloadTime);
         ReloadTimer.Start();
     }
 
@@ -90,6 +80,7 @@ public partial class Weapon : Node2D
         float directionAngle = direction.Angle();
         GlobalPosition = origin + (new Vector2(Mathf.Cos(directionAngle), Mathf.Sin(directionAngle)) * 10f);
         //GlobalPosition = origin + direction * 10f; //same as
+
         FlipWeapon(directionAngle);
 
         Rotation = directionAngle;
@@ -112,8 +103,8 @@ public partial class Weapon : Node2D
 
     private void FillBullets()
     {
-        MunitionsInMagazine = MagazineCapacity;
-        for (int i = 0; i < MagazineCapacity; i++)
+        MunitionsInMagazine = StatsComponent.MagazineCapacity;
+        for (int i = 0; i < StatsComponent.MagazineCapacity; i++)
         {
             Bullet bullet = BulletScene.Instantiate<Bullet>();
             Bullets.Push(bullet);
@@ -129,5 +120,14 @@ public partial class Weapon : Node2D
     private void OnReloadTimerTimeout()
     {
         FillBullets();
+    }
+
+    //
+    // Summary:
+    //     Allow to get number of seconds between each shot
+    //     ShotSpeed is the amount of bullets shot per seconds
+    private double DetermineFireRateTime()
+    {
+        return (1000 / (double)StatsComponent.ShotSpeed)/1000;
     }
 }
