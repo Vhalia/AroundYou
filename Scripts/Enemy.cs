@@ -11,6 +11,8 @@ public partial class Enemy : Character
     public HurtboxComponent HurtboxComponent;
     [Node("FloatingTextComponent")]
     public FloatingTextComponent FloatingTextComponent;
+    [Node("DropComponent")]
+    public DropComponent DropComponent;
 
     public Player Player;
 
@@ -47,6 +49,7 @@ public partial class Enemy : Character
 
     private void HealthComponent_Died()
     {
+        DropComponent.Generate(5, GlobalPosition, true);
         QueueFree();
     }
 

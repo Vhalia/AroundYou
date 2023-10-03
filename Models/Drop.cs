@@ -8,5 +8,7 @@ namespace AroundYou.Models
     {
         public PackedScene PackedScene { get; set; }
         public ERarity Rarity { get; set; }
+        public float ChanceToDrop { get; set; }
+        public float PickupRange { get; set; }
     }
 }

@@ -115,7 +115,7 @@ scale = Vector2(0.75, 0.75)
 material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 22
+frame = 15
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

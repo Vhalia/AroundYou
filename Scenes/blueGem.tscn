@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp6l0riueuiab"]
+
+[ext_resource type="Texture2D" uid="uid://dv7sg38htg8q2" path="res://Assets/gem.png" id="1_w8clg"]
+[ext_resource type="Script" path="res://Scripts/Drops/Drop.cs" id="1_y7klw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8cgkb"]
+radius = 36.0139
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t35vo"]
+
+[node name="BlueGem" type="Node2D"]
+script = ExtResource("1_y7klw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_w8clg")
+
+[node name="FollowArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea"]
+shape = SubResource("CircleShape2D_8cgkb")
+
+[node name="PickupArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_t35vo")

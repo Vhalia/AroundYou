@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://6l4wcse0lbip"]
+[gd_scene load_steps=15 format=3 uid="uid://6l4wcse0lbip"]
 
 [ext_resource type="Texture2D" uid="uid://du4lupf1wj05o" path="res://Assets/enemy.png" id="1_26iux"]
 [ext_resource type="PackedScene" uid="uid://ct1e0j6p0qqss" path="res://Scenes/enemy.tscn" id="1_l3vts"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/States/CharacterStates/IdleState.cs" id="5_je0dj"]
 [ext_resource type="Script" path="res://Scripts/States/CharacterStates/MovingState.cs" id="6_0qmwj"]
 [ext_resource type="PackedScene" uid="uid://bb2dktmgdis4c" path="res://Scenes/Components/MoveComponent.tscn" id="7_cormy"]
+[ext_resource type="PackedScene" uid="uid://d20b8fk5hffmp" path="res://Scenes/Components/DropComponent.tscn" id="8_ehf6t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_atiy2"]
 radius = 9.0
@@ -55,7 +56,7 @@ position = Vector2(0, 12)
 scale = Vector2(1.2, 1.2)
 
 [node name="Sprite2D" parent="." index="1"]
-position = Vector2(0, 0.05051)
+position = Vector2(0, -0.216806)
 texture = ExtResource("1_26iux")
 metadata/_edit_lock_ = true
 
@@ -107,3 +108,6 @@ active = true
 libraries = {
 "": SubResource("AnimationLibrary_itwmj")
 }
+
+[node name="DropComponent" parent="." index="11" instance=ExtResource("8_ehf6t")]
+distanceSpawn = 10

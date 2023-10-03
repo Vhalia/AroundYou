@@ -60,6 +60,8 @@ namespace AroundYou.Scripts.Components
 
         private float ApplyArmor(float amount)
         {
+            if (StatsComponent.Armor == 0)
+                return amount;
             return amount * ((float)StatsComponent.Armor/100);
         }
 
