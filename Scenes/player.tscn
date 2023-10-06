@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dns5ricq4bmh5"]
+[gd_scene load_steps=29 format=3 uid="uid://dns5ricq4bmh5"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_gx3ts"]
 [ext_resource type="PackedScene" uid="uid://cdvkxm41b7h23" path="res://Scenes/Components/ShadowComponent.tscn" id="2_v6xsr"]
@@ -102,6 +102,8 @@ states/walk/node = SubResource("AnimationNodeAnimation_7b56k")
 states/walk/position = Vector2(564, 224)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_i71ws"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_25ltm"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_fels4")]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5tgjt"]
+
 [node name="Player" type="CharacterBody2D" groups=["Ally"]]
 collision_mask = 30
 script = ExtResource("1_gx3ts")
@@ -115,7 +117,6 @@ scale = Vector2(0.75, 0.75)
 material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 15
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -187,3 +188,9 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/conditions/isIdle = true
 parameters/conditions/isMoving = false
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_5tgjt")

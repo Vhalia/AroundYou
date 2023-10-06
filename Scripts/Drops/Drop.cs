@@ -6,15 +6,15 @@ namespace AroundYou.Scripts
 {
     public partial class Drop : Node2D
     {
+        [Export]
+        private bool _following = false;
+        [Export]
+        private float _speed = 150;
+
         [Node("FollowArea")]
         public Area2D followArea;
-        [Node("PickupArea")]
-        public Area2D pickupArea;
 
         public float PickupRange { get; set; }
-
-        private bool _following = false;
-        private float _speed = 150;
 
         [Signal]
         public delegate void DropPickedEventHandler();
@@ -25,7 +25,6 @@ namespace AroundYou.Scripts
             this.WireNodes();
 
             followArea.BodyShapeEntered += FollowArea_BodyShapeEntered;
-            pickupArea.BodyShapeEntered += PickupArea_BodyShapeEntered;
         }
 
         public override void _PhysicsProcess(double delta)
@@ -53,15 +52,6 @@ namespace AroundYou.Scripts
             GlobalPosition = new Vector2(
                 (float)Mathf.Lerp(GlobalPosition.X, GlobalPosition.X + direction.X * _speed * delta, 0.8),
                 (float)Mathf.Lerp(GlobalPosition.Y, GlobalPosition.Y + direction.Y * _speed * delta, 0.8));
-        }
-
-        private void PickupArea_BodyShapeEntered(Rid bodyRid, Node2D body, long bodyShapeIndex, long localShapeIndex)
-        {
-            if (body is Player)
-            {
-                EmitSignal(SignalName.DropPicked);
-                QueueFree();
-            }
         }
 
         private void FollowArea_BodyShapeEntered(Rid bodyRid, Node2D body, long bodyShapeIndex, long localShapeIndex)

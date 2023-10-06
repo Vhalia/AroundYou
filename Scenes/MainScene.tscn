@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://qip3xaxsc38w"]
+[gd_scene load_steps=17 format=3 uid="uid://qip3xaxsc38w"]
 
 [ext_resource type="Texture2D" uid="uid://d0joqjjam4ilj" path="res://Assets/ground_0.png" id="1_i3lf7"]
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_pm8of"]
 [ext_resource type="PackedScene" uid="uid://dns5ricq4bmh5" path="res://Scenes/player.tscn" id="2_5ey7m"]
 [ext_resource type="Script" path="res://Scripts/Camera.cs" id="3_jnobm"]
+[ext_resource type="PackedScene" uid="uid://bahv5fa7fjfph" path="res://Scenes/UI/experienceBar.tscn" id="3_rm1or"]
 [ext_resource type="Script" path="res://Scenes/Components/DebugDisplay.cs" id="5_27esa"]
 [ext_resource type="LabelSettings" uid="uid://w1qsirr7712f" path="res://Assets/LabelSettings/debugLabels.tres" id="6_8axyx"]
 [ext_resource type="PackedScene" uid="uid://dkaeiyemptf8i" path="res://Scenes/UI/magazine.tscn" id="7_co4q7"]
@@ -45,6 +46,12 @@ metadata/_edit_lock_ = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="ExperienceBar" parent="UI" node_paths=PackedStringArray("_player") instance=ExtResource("3_rm1or")]
+offset_top = 11.0
+offset_bottom = -9.0
+_player = NodePath("../../Player")
+_maxValuePerLevelGained = 10
+
 [node name="Magazine" parent="UI" instance=ExtResource("7_co4q7")]
 BulletTexture = ExtResource("8_b1i42")
 EmptyBulletTexture = ExtResource("9_dhx58")
@@ -52,9 +59,9 @@ EmptyBulletTexture = ExtResource("9_dhx58")
 [node name="DebugDisplay" type="Control" parent="UI" node_paths=PackedStringArray("Player", "Director")]
 layout_mode = 3
 anchors_preset = 0
-offset_top = 31.0
+offset_top = 201.0
 offset_right = 110.0
-offset_bottom = 110.0
+offset_bottom = 280.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 auto_translate = false
@@ -70,6 +77,10 @@ offset_bottom = 116.0
 columns = 2
 
 [node name="PlayerLife" parent="UI" instance=ExtResource("8_l4b7c")]
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 48.0
+offset_bottom = 88.0
 
 [node name="Player" parent="." instance=ExtResource("2_5ey7m")]
 material = SubResource("ShaderMaterial_362qr")
