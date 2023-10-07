@@ -22,6 +22,8 @@ public partial class Player : Character
     public new Sprite2D Sprite;
     [Node("PickupArea")]
     public Area2D PickupArea;
+    [Node("StatComponent")]
+    public StatsComponent StatsComponent;
 
     public Vector2 AimingDirection;
 

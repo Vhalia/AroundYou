@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AroundYou.Models
 {
     public class Power
     {
         public string Name { get; set; }
-        public string Description { get; set; }
-        public float Value { get; set; }
+        public string DescriptionTemplate { get; set; }
+        public List<float> Values { get; set; }
+        public StatModifier StatModifier { get; set; }
+
+        public string GenerateDescription()
+        {
+        }
     }
 }
