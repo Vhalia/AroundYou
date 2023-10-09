@@ -1,3 +1,4 @@
+using AroundYou.Scripts;
 using AroundYou.Scripts.Singleton;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
@@ -5,6 +6,9 @@ using Godot;
 
 public partial class PlayerLife : Control
 {
+    [Export]
+    private Player _player;
+
     [Node("HBoxContainer/CurrentHealth")]
     private Label _currentHealth;
     [Node("HBoxContainer/MaxHealth")]
@@ -16,7 +20,12 @@ public partial class PlayerLife : Control
         this.WireNodes();
 
         this.GetAutoLoad<EventsBus>().PlayerHealthChanged += OnPlayerHealthChanged;
+        _player.StatsComponent.MaxHealthChanged += StatsComponent_MaxHealthChanged;
+    }
 
+    private void StatsComponent_MaxHealthChanged(int maxHealth)
+    {
+        _maxHealth.Text = maxHealth.ToString();
     }
 
     private void OnPlayerHealthChanged(float amount)

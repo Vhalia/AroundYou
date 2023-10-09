@@ -77,5 +77,10 @@ namespace AroundYou.Utils.Extensions
         {
             return node.GetNode("/root/Main");
         }
+
+        public static Node GetUI(this Node node)
+        {
+            return node.GetMain().GetNode("UI");
+        }
     }
 }

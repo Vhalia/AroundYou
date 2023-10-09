@@ -1,4 +1,5 @@
 using AroundYou.Models;
+using AroundYou.Models.Modifiers;
 using AroundYou.Scripts;
 using AroundYou.Utils.Attributes;
 using AroundYou.Utils.Extensions;
@@ -12,47 +13,56 @@ public partial class ChoosePowerUI : Control
     [Export]
     private Player _player;
 
-    [Node("MarginController/HBoxContainer/Power1")]
-    private Control _power1;
-    [Node("MarginController/HBoxContainer/Power2")]
-    private Control _power2;
-    [Node("MarginController/HBoxContainer/Power3")]
-    private Control _power3;
+    [Node("MarginContainer/HBoxContainer/Power1")]
+    private Control _powerControl1;
+    [Node("MarginContainer/HBoxContainer/Power2")]
+    private Control _powerControl2;
+    [Node("MarginContainer/HBoxContainer/Power3")]
+    private Control _powerControl3;
 
-    private List<Power> _powers;
+    private List<Power> _power;
+    private Power[] _powersShown;
 
     public override void _Ready()
     {
         base._Ready();
         this.WireNodes();
 
-        _powers = new()
+        _power = new List<Power>()
         {
-            new()
-            {
-                Name = "Yummy !",
-                DescriptionTemplate = "Increase maximum life by #%",
-                Values = new() { 5 }
-            }
+            Power.Init("Yummy !").AddModifier(new StatModifier("Increase max life by #%", 5,
+                (value) => _player.StatsComponent.IncreasePercent(nameof(StatsComponent.MaxHealth), value))),
+
+            Power.Init("Rock").AddModifier(new StatModifier("Add +#% armor", 5,
+                (value) => _player.StatsComponent.Add(nameof(StatsComponent.Armor), value))),
+
+            Power.Init("Ninja").AddModifier(new StatModifier("Add +#% evasion", 5,
+                (value) => _player.StatsComponent.Add(nameof(StatsComponent.Evasion), value))),
+
+            Power.Init("Speedy").AddModifier(new StatModifier("Increase movement speed by #%", 2,
+                (value) => _player.StatsComponent.IncreasePercent(nameof(StatsComponent.Evasion), value)))
         };
 
-        _power1.GuiInput += (@event) => PowerControlGuiInput(@event, _power1);
-        _power2.GuiInput += (@event) => PowerControlGuiInput(@event, _power2);
-        _power3.GuiInput += (@event) => PowerControlGuiInput(@event, _power3);
+        _powersShown = new Power[3];
+
+        _powerControl1.GuiInput += (@event) => PowerControlGuiInput(@event, 0);
+        _powerControl2.GuiInput += (@event) => PowerControlGuiInput(@event, 1);
+        _powerControl3.GuiInput += (@event) => PowerControlGuiInput(@event, 2);
     }
 
-    public void ShowPowers()
+    public void ShowModifiers()
     {
         List<Power> powers = SelectRandomPower();
+        _powersShown = powers.ToArray();
 
-        InitPowerControl(_power1, powers[0]);
-        InitPowerControl(_power2, powers[1]);
-        InitPowerControl(_power3, powers[2]);
+        InitModifierControl(_powerControl1, powers[0]);
+        InitModifierControl(_powerControl2, powers[1]);
+        InitModifierControl(_powerControl3, powers[2]);
 
         Show();
     }
 
-    private void InitPowerControl(Control controlPower, Power power)
+    private void InitModifierControl(Control controlPower, Power power)
     {
         var powerName = controlPower.GetNode("VBoxContainer/Name") as Label;
         powerName.Text = power.Name;
@@ -71,29 +81,32 @@ public partial class ChoosePowerUI : Control
             int randomIndex;
             do
             {
-                randomIndex = new Random().RandomBetween(0, _powers.Count - 1);
+                randomIndex = new Random().RandomBetween(0, _power.Count - 1);
             } while (indexes.Contains(randomIndex));
 
             indexes.Add(randomIndex);
-            powersChosen.Add(_powers[randomIndex]);
+            powersChosen.Add(_power[randomIndex]);
         }
 
         return powersChosen;
     }
 
-    private void ChoosePower(Control power)
+    private void ChoosePower(int powerControlIndex)
     {
-        _player.StatsComponent.
+        var power = _powersShown[powerControlIndex];
+
+        power.ApplyModifiers();
+
         Hide();
     }
 
-    private void PowerControlGuiInput(InputEvent @event, Control origin)
+    private void PowerControlGuiInput(InputEvent @event, int powerControlIndex)
     {
         if (@event is InputEventMouseButton mouseInput)
         {
             if (mouseInput.ButtonIndex == MouseButton.Left && mouseInput.Pressed)
             {
-                ChoosePower(origin);
+                ChoosePower(powerControlIndex);
             }
         }
     }

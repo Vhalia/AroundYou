@@ -42,7 +42,14 @@ public partial class DebugDisplay : Control
                 (float)Math.Round(Player.GlobalPosition.X, 2),
                 (float)Math.Round(Player.GlobalPosition.Y, 2))
             .ToString();
+
         _valuePerTitle["DirectorUnits"].Text = Director.Units.ToString();
+
+        _valuePerTitle["Armor"].Text = Player.StatsComponent.Armor.ToString();
+
+        _valuePerTitle["Evasion"].Text = Player.StatsComponent.Evasion.ToString();
+
+        _valuePerTitle["Movement Speed"].Text = Player.StatsComponent.MovementSpeed.ToString();
     }
 
     private void PopulateValues()
@@ -51,6 +58,9 @@ public partial class DebugDisplay : Control
         {
             {"PlayerPosition", InitLabel("")},
             {"DirectorUnits", InitLabel("")},
+            {"Armor", InitLabel("")},
+            {"Evasion", InitLabel("")},
+            {"Movement Speed", InitLabel("")},
         };
     }
 

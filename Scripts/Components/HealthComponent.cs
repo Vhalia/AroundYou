@@ -35,7 +35,6 @@ namespace AroundYou.Scripts.Components
             HealthRegenerationTimer.Timeout += HealthRegenerationTimer_Timeout;
         }
 
-
         public void LowerHealth(float amount)
         {
             if (HasEvaded())

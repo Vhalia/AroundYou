@@ -22,7 +22,7 @@ public partial class Player : Character
     public new Sprite2D Sprite;
     [Node("PickupArea")]
     public Area2D PickupArea;
-    [Node("StatComponent")]
+    [Node("StatsComponent")]
     public StatsComponent StatsComponent;
 
     public Vector2 AimingDirection;
@@ -80,7 +80,7 @@ public partial class Player : Character
 
     public void LevelUp(int level)
     {
-
+        (this.GetMain().GetNode("UI/ChoosePowerScreen") as ChoosePowerUI).ShowModifiers();
     }
 
     private void Pickup(Drop drop)
