@@ -8,6 +8,7 @@ radius = 36.0139
 
 [node name="BlueGem" type="Node2D"]
 script = ExtResource("1_y7klw")
+_speed = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_w8clg")

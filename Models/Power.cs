@@ -23,12 +23,56 @@ namespace AroundYou.Models
             return this;
         }
 
-        public void ApplyModifiers()
+        public void ApplyModifiers(StatsComponent statsComponent)
         {
             foreach (Modifier modifier in Modifiers)
             {
-                modifier.Apply();
+                modifier.Apply(statsComponent);
             }
+        }
+
+        public Dictionary<string, dynamic> PreCalculateModifiers(StatsComponent statsComponent)
+        {
+            Dictionary<string, dynamic> preCalculatedValues = new();
+            foreach (Modifier modifier in Modifiers)
+            {
+                if (modifier is StatModifier)
+                {
+                    var statModifier = modifier as StatModifier;
+                    if (preCalculatedValues.TryGetValue(statModifier.StatName, out var existingValue))
+                    {
+                        preCalculatedValues[statModifier.StatName] = existingValue + modifier.PreCalculate(statsComponent);
+                    }
+                    else
+                    {
+                        preCalculatedValues.Add(statModifier.StatName, modifier.PreCalculate(statsComponent));
+                    }
+                }
+            }
+
+            return preCalculatedValues;
+        }
+
+        public Dictionary<string, dynamic> CalculateDifferenceModifiers(StatsComponent statsComponent)
+        {
+            Dictionary<string, dynamic> differences = new();
+            foreach (Modifier modifier in Modifiers)
+            {
+                if (modifier is StatModifier)
+                {
+                    var statModifier = modifier as StatModifier;
+                    if (differences.TryGetValue(statModifier.StatName, out var existingValue))
+                    {
+                        differences[statModifier.StatName] = existingValue + modifier.CalculateDifference(statsComponent);
+                    }
+                    else
+                    {
+                        differences.Add(statModifier.StatName, modifier.CalculateDifference(statsComponent));
+                    }
+                }
+            }
+
+            return differences;
         }
 
         public string GenerateDescription()

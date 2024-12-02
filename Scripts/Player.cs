@@ -41,7 +41,6 @@ public partial class Player : Character
         Weapon.BulletsInMagazineChanged += Weapon_BulletsInMagazineChanged;
         HealthComponent.HealthChanged += HealthComponent_HealthChanged;
         HealthComponent.Damaged += HealthComponent_Damaged;
-        PickupArea.BodyShapeEntered += PickupArea_BodyShapeEntered;
         PickupArea.AreaShapeEntered += PickupArea_AreaShapeEntered;
     }
 
@@ -80,7 +79,7 @@ public partial class Player : Character
 
     public void LevelUp(int level)
     {
-        (this.GetMain().GetNode("UI/ChoosePowerScreen") as ChoosePowerUI).ShowModifiers();
+        (this.GetMain().GetNode("UI/ChoosePowerScreen") as ChoosePowerUI).ShowUi();
     }
 
     private void Pickup(Drop drop)
@@ -109,7 +108,7 @@ public partial class Player : Character
     }
     private void Weapon_BulletsInMagazineChanged(int bulletsCount)
     {
-        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.StatsComponent.MagazineCapacity);
+        _ = this.GetAutoLoad<EventsBus>().EmitSignal(EventsBus.SignalName.BulletsInMagazineChanged, bulletsCount, Weapon.StatsComponent.WeaponMagazineCapacity);
     }
 
     private void Weapon_Reloading(int reloadTime)
@@ -125,12 +124,6 @@ public partial class Player : Character
     private void HealthComponent_Damaged(float amount)
     {
         HurtAnimation();
-    }
-
-    private void PickupArea_BodyShapeEntered(Rid bodyRid, Node2D body, long bodyShapeIndex, long localShapeIndex)
-    {
-        if (body is Drop)
-            Pickup(body as Drop);
     }
 
     private void PickupArea_AreaShapeEntered(Rid areaRid, Area2D area, long areaShapeIndex, long localShapeIndex)

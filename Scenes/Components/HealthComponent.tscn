@@ -8,4 +8,5 @@ script = ExtResource("1_fd8pd")
 DeathEffectScene = ExtResource("2_twcl0")
 
 [node name="HealthRegenerationTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true

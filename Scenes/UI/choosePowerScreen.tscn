@@ -1,7 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpbv4uqmkpgy6"]
+[gd_scene load_steps=18 format=3 uid="uid://cpbv4uqmkpgy6"]
 
 [ext_resource type="Script" path="res://Scripts/Ui/ChoosePowerUI.cs" id="1_yi0ch"]
 [ext_resource type="LabelSettings" uid="uid://cqppio2kdyqrp" path="res://Assets/Fonts/powerLabel.tres" id="2_d6rix"]
+[ext_resource type="Texture2D" uid="uid://cr804culs8fmh" path="res://Assets/power-panel.png" id="2_ui0dy"]
+[ext_resource type="Texture2D" uid="uid://c00dart3y2tot" path="res://Assets/stat-panel.png" id="4_imjh5"]
+[ext_resource type="Texture2D" uid="uid://cxg4fojwsio0g" path="res://Assets/health-stat-icone.png" id="5_siypj"]
+[ext_resource type="Texture2D" uid="uid://c5jhwniqduhxh" path="res://Assets/armor-stat-icone.png" id="6_6jyh0"]
+[ext_resource type="FontFile" uid="uid://ddepajodofned" path="res://Assets/Fonts/dogica.otf" id="6_7hiob"]
+[ext_resource type="Texture2D" uid="uid://c0y4obkx4oncb" path="res://Assets/evasion-stat-icone.png" id="7_u4pdq"]
+[ext_resource type="Texture2D" uid="uid://dft763sixkndd" path="res://Assets/health-regen-stat-icone.png" id="8_rme4q"]
+[ext_resource type="Texture2D" uid="uid://ivv3mt4kxmfp" path="res://Assets/speed-stat-icone.png" id="9_7r5e5"]
+[ext_resource type="Texture2D" uid="uid://blnxmombt5665" path="res://Assets/damage-stat-icone.png" id="10_6go3k"]
+[ext_resource type="Texture2D" uid="uid://cy1qb60gkjl2w" path="res://Assets/reload-speed-stat-icone.png" id="11_gjan2"]
+[ext_resource type="Texture2D" uid="uid://bci6c12n3gnpa" path="res://Assets/bullet-speed-stat-icone.png" id="12_w0mh7"]
+[ext_resource type="Texture2D" uid="uid://dfwj1bi001uhd" path="res://Assets/fire-rate-stat-icone.png" id="13_hkwse"]
+[ext_resource type="Texture2D" uid="uid://dp7e8lquysqxh" path="res://Assets/bullet-count-stat-icone.png" id="14_ebqs2"]
+[ext_resource type="Texture2D" uid="uid://60odkw8d0nsn" path="res://Assets/capacity-stat-icone.png" id="15_jryro"]
+[ext_resource type="Texture2D" uid="uid://ccngmxi03i2qm" path="res://Assets/range-stat-icone.png" id="16_y7ps5"]
 
 [node name="ChoosePowerScreen" type="Control"]
 layout_mode = 3
@@ -17,123 +32,402 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 26.0
+offset_left = 61.0
 offset_top = 36.0
-offset_right = -32.0
-offset_bottom = -34.0
+offset_right = -59.0
+offset_bottom = -55.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+metadata/_edit_lock_ = true
 
-[node name="Power1" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="Power1" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+metadata/_edit_lock_ = true
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/Power1"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Power1"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 500.0
+texture = ExtResource("2_ui0dy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Power1/TextureRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Power1"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/Power1/VBoxContainer"]
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power1/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Test"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
 
-[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/Power1/VBoxContainer"]
+[node name="Description" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power1/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
 
-[node name="Power2" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Power2" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+metadata/_edit_lock_ = true
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/Power2"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Power2"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 500.0
+texture = ExtResource("2_ui0dy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Power2/TextureRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Power2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/Power2/VBoxContainer"]
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power2/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Test"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
 
-[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/Power2/VBoxContainer"]
+[node name="Description" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power2/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
 
-[node name="Power3" type="Control" parent="MarginContainer/HBoxContainer"]
+[node name="Power3" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+metadata/_edit_lock_ = true
 
-[node name="ColorRect" type="ColorRect" parent="MarginContainer/HBoxContainer/Power3"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/Power3"]
+layout_mode = 0
+offset_right = 350.0
+offset_bottom = 500.0
+texture = ExtResource("2_ui0dy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/Power3/TextureRect"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Power3"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Name" type="Label" parent="MarginContainer/HBoxContainer/Power3/VBoxContainer"]
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power3/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Test"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
 
-[node name="Description" type="Label" parent="MarginContainer/HBoxContainer/Power3/VBoxContainer"]
+[node name="Description" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/Power3/TextureRect/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Description"
 label_settings = ExtResource("2_d6rix")
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="StatPanel" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel"]
+layout_mode = 2
+offset_top = -118.0
+offset_right = 1141.0
+offset_bottom = 32.0
+texture = ExtResource("4_imjh5")
+metadata/_edit_lock_ = true
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 35.0
+offset_right = 1093.0
+offset_bottom = 115.0
+columns = 6
+
+[node name="HealthStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthStat"]
+layout_mode = 2
+texture = ExtResource("5_siypj")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.988235, 1)
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="ArmorStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ArmorStat"]
+layout_mode = 2
+texture = ExtResource("6_6jyh0")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ArmorStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ArmorStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="EvasionStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/EvasionStat"]
+layout_mode = 2
+texture = ExtResource("7_u4pdq")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/EvasionStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/EvasionStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="HealthRegenStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthRegenStat"]
+layout_mode = 2
+texture = ExtResource("8_rme4q")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthRegenStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/HealthRegenStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="MovementSpeedStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/MovementSpeedStat"]
+layout_mode = 2
+texture = ExtResource("9_7r5e5")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/MovementSpeedStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/MovementSpeedStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="DamageStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/DamageStat"]
+layout_mode = 2
+texture = ExtResource("10_6go3k")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/DamageStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/DamageStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="ReloadSpeedStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ReloadSpeedStat"]
+layout_mode = 2
+texture = ExtResource("11_gjan2")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ReloadSpeedStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/ReloadSpeedStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="BulletSpeedStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletSpeedStat"]
+layout_mode = 2
+texture = ExtResource("12_w0mh7")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletSpeedStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletSpeedStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="FireRateStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/FireRateStat"]
+layout_mode = 2
+texture = ExtResource("13_hkwse")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/FireRateStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/FireRateStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="BulletCountStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletCountStat"]
+layout_mode = 2
+texture = ExtResource("14_ebqs2")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletCountStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletCountStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="BulletInMagazineStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletInMagazineStat"]
+layout_mode = 2
+texture = ExtResource("15_jryro")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletInMagazineStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/BulletInMagazineStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")
+
+[node name="RangeStat" type="HBoxContainer" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Icone" type="TextureRect" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/RangeStat"]
+layout_mode = 2
+texture = ExtResource("16_y7ps5")
+expand_mode = 2
+
+[node name="Amount" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/RangeStat"]
+layout_mode = 2
+text = "12"
+label_settings = ExtResource("2_d6rix")
+
+[node name="Modification" type="Label" parent="MarginContainer/VBoxContainer/StatPanel/TextureRect/GridContainer/RangeStat"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_7hiob")

@@ -40,11 +40,11 @@ public partial class Weapon : Node2D
         FillBullets();
 
         FiringRateTimer.WaitTime = DetermineFireRateTime();
-        ReloadTimer.WaitTime = StatsComponent.ReloadTime;
+        ReloadTimer.WaitTime = StatsComponent.WeaponReloadTime;
 
         ReloadTimer.Timeout += OnReloadTimerTimeout;
 
-        CallDeferred(nameof(SetMunitionsInMagazine), StatsComponent.MagazineCapacity);
+        CallDeferred(nameof(SetMunitionsInMagazine), StatsComponent.WeaponMagazineCapacity);
     }
 
     public void Shoot(Vector2 Direction)
@@ -52,10 +52,10 @@ public partial class Weapon : Node2D
         if (CanShoot)
         {
             AnimatedSprite?.Play("shoot");
-            for (int i = 0; i < StatsComponent.BulletsPerShot; i++)
+            for (int i = 0; i < StatsComponent.WeaponBulletsPerShot; i++)
             {
                 Bullet bullet = Bullets.Pop();
-                bullet.Init(StatsComponent.Damage, StatsComponent.BulletSpeed, Direction, BulletSpawnMarker.GlobalPosition);
+                bullet.Init(StatsComponent.WeaponDamage, StatsComponent.WeaponBulletSpeed, Direction, BulletSpawnMarker.GlobalPosition);
                 GetTree().CurrentScene.AddChild(bullet);
             }
             MunitionsInMagazine--;
@@ -71,7 +71,7 @@ public partial class Weapon : Node2D
 
     public void Reload()
     {
-        _ = EmitSignal(SignalName.Reloading, StatsComponent.ReloadTime);
+        _ = EmitSignal(SignalName.Reloading, StatsComponent.WeaponReloadTime);
         ReloadTimer.Start();
     }
 
@@ -103,8 +103,8 @@ public partial class Weapon : Node2D
 
     private void FillBullets()
     {
-        MunitionsInMagazine = StatsComponent.MagazineCapacity;
-        for (int i = 0; i < StatsComponent.MagazineCapacity; i++)
+        MunitionsInMagazine = StatsComponent.WeaponMagazineCapacity;
+        for (int i = 0; i < StatsComponent.WeaponMagazineCapacity; i++)
         {
             Bullet bullet = BulletScene.Instantiate<Bullet>();
             Bullets.Push(bullet);
@@ -128,6 +128,6 @@ public partial class Weapon : Node2D
     //     ShotSpeed is the amount of bullets shot per seconds
     private double DetermineFireRateTime()
     {
-        return (1000 / (double)StatsComponent.ShotSpeed)/1000;
+        return (1000 / (double)StatsComponent.WeaponShotSpeed)/1000;
     }
 }

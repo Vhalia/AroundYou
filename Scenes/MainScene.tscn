@@ -61,7 +61,7 @@ script = ExtResource("3_jnobm")
 offset_top = 11.0
 offset_bottom = -9.0
 _player = NodePath("../../Player")
-_maxValuePerLevelGained = 10
+_maxValuePerLevelGained = 5
 
 [node name="Magazine" parent="UI" instance=ExtResource("7_co4q7")]
 BulletTexture = ExtResource("8_b1i42")
@@ -88,6 +88,7 @@ offset_bottom = 116.0
 columns = 2
 
 [node name="ChoosePowerScreen" parent="UI" node_paths=PackedStringArray("_player") instance=ExtResource("10_3cmkj")]
+process_mode = 2
 visible = false
 _player = NodePath("../../Player")
 
@@ -100,12 +101,12 @@ _player = NodePath("../../Player")
 
 [node name="Director" type="Node2D" parent="." node_paths=PackedStringArray("_player")]
 script = ExtResource("10_qjim6")
-Units = 150
-_unitsGainedPerSecond = 5
+Units = 15
+_unitsGainedPerSecond = 1
 _spawnDistanceFromPlayer = 200
 _player = NodePath("../Player")
 _basePath = "res://Scenes/"
-_difficultyScaleRate = 0.8
+_difficultyScaleRate = 0.5
 _chanceToSpawnEnemies = 1.0
 
 [node name="Timer" type="Timer" parent="Director"]

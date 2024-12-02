@@ -44,12 +44,17 @@ public partial class DebugDisplay : Control
             .ToString();
 
         _valuePerTitle["DirectorUnits"].Text = Director.Units.ToString();
-
+        _valuePerTitle["HealthRegeneration"].Text = Player.StatsComponent.HealthRegeneration.ToString();
         _valuePerTitle["Armor"].Text = Player.StatsComponent.Armor.ToString();
-
         _valuePerTitle["Evasion"].Text = Player.StatsComponent.Evasion.ToString();
-
         _valuePerTitle["Movement Speed"].Text = Player.StatsComponent.MovementSpeed.ToString();
+        _valuePerTitle["Damage"].Text = Player.Weapon.StatsComponent.WeaponDamage.ToString();
+        _valuePerTitle["BulletSpeed"].Text = Player.Weapon.StatsComponent.WeaponBulletSpeed.ToString();
+        _valuePerTitle["ShotSpeed"].Text = Player.Weapon.StatsComponent.WeaponShotSpeed.ToString();
+        _valuePerTitle["Bullet per shot"].Text = Player.Weapon.StatsComponent.WeaponBulletsPerShot.ToString();
+        _valuePerTitle["MagazineCapacity"].Text = Player.Weapon.StatsComponent.WeaponMagazineCapacity.ToString();
+        _valuePerTitle["ReloadTime"].Text = Player.Weapon.StatsComponent.WeaponReloadTime.ToString();
+        _valuePerTitle["DistanceRange"].Text = Player.Weapon.StatsComponent.WeaponDistanceRange.ToString();
     }
 
     private void PopulateValues()
@@ -58,9 +63,18 @@ public partial class DebugDisplay : Control
         {
             {"PlayerPosition", InitLabel("")},
             {"DirectorUnits", InitLabel("")},
+            {"", InitLabel("")},
+            {"HealthRegeneration", InitLabel("")},
             {"Armor", InitLabel("")},
             {"Evasion", InitLabel("")},
             {"Movement Speed", InitLabel("")},
+            {"Damage", InitLabel("")},
+            {"BulletSpeed", InitLabel("")},
+            {"ShotSpeed", InitLabel("")},
+            {"Bullet per shot", InitLabel("")},
+            {"MagazineCapacity", InitLabel("")},
+            {"ReloadTime", InitLabel("")},
+            {"DistanceRange", InitLabel("")},
         };
     }
 

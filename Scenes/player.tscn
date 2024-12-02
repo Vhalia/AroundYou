@@ -103,6 +103,7 @@ states/walk/position = Vector2(564, 224)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_i71ws"), "idle", "walk", SubResource("AnimationNodeStateMachineTransition_25ltm"), "walk", "idle", SubResource("AnimationNodeStateMachineTransition_fels4")]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5tgjt"]
+radius = 1.0
 
 [node name="Player" type="CharacterBody2D" groups=["Ally"]]
 collision_mask = 30
@@ -117,7 +118,7 @@ scale = Vector2(0.75, 0.75)
 material = SubResource("ShaderMaterial_doo5q")
 texture = ExtResource("3_fkog4")
 hframes = 32
-frame = 12
+frame = 15
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -192,6 +193,7 @@ parameters/conditions/isMoving = false
 
 [node name="PickupArea" type="Area2D" parent="."]
 collision_mask = 8
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("CircleShape2D_5tgjt")

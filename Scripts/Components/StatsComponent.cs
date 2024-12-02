@@ -1,3 +1,4 @@
+using AroundYou.Models.Enums;
 using AroundYou.Utils.Extensions;
 using Godot;
 using System;
@@ -46,14 +47,14 @@ public partial class StatsComponent : Node2D
     public float HealthRegeneration { get => _healthRegeneration; set => SetHealthRegeneration(value); }
     public int Armor { get => _armor; set => SetArmor(value); }
     public float Evasion { get => _evasion; set => SetEvasion(value); }
-    public int Damage { get => _damage; set => SetDamage(value); }
+    public int WeaponDamage { get => _damage; set => SetDamage(value); }
     public int MovementSpeed { get => _movementSpeed; set => SetMovementSpeed(value); }
-    public int MagazineCapacity { get => _magazineCapacity; set => SetMagazineCapacity(value); }
-    public int ShotSpeed { get => _shotSpeed; set => SetShotSpeed(value); }
-    public int BulletSpeed { get => _bulletSpeed; set => SetBulletSpeed(value); }
-    public int ReloadTime { get => _reloadTime; set => SetReloadTime(value); }
-    public int DistanceRange { get => _distanceRange; set => SetDistanceRange(value); }
-    public int BulletsPerShot { get => _bulletsPerShot ; set => SetBulletsPerShot(value); }
+    public int WeaponMagazineCapacity { get => _magazineCapacity; set => SetMagazineCapacity(value); }
+    public int WeaponShotSpeed { get => _shotSpeed; set => SetShotSpeed(value); }
+    public int WeaponBulletSpeed { get => _bulletSpeed; set => SetBulletSpeed(value); }
+    public int WeaponReloadTime { get => _reloadTime; set => SetReloadTime(value); }
+    public int WeaponDistanceRange { get => _distanceRange; set => SetDistanceRange(value); }
+    public int WeaponBulletsPerShot { get => _bulletsPerShot ; set => SetBulletsPerShot(value); }
     public int MeleeRange { get => _meleeRange; set => SetMeleeRange(value); }
 
     #endregion
@@ -183,7 +184,71 @@ public partial class StatsComponent : Node2D
 
     #endregion
 
-    public void Set(string propertyName, dynamic value)
+    public void Calculate(string propertyName, EStatCalculationType statCalculationType, dynamic value)
+    {
+        switch(statCalculationType)
+        {
+            case EStatCalculationType.SET:
+                Set(propertyName, value);
+                break;
+            case EStatCalculationType.ADD:
+                Add(propertyName, value);
+                break;
+            case EStatCalculationType.ADD_PERCENT:
+                AddPercent(propertyName, value);
+                break;
+            case EStatCalculationType.INCREASE:
+                Increase(propertyName, value);
+                break;
+            case EStatCalculationType.INCREASE_PERCENT:
+                IncreasePercent(propertyName, value);
+                break;
+        }
+    }
+
+    public dynamic PreCalculate(string propertyName, EStatCalculationType statCalculationType, dynamic value)
+    {
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
+
+        switch (statCalculationType)
+        {
+            case EStatCalculationType.SET:
+                return value;
+            case EStatCalculationType.ADD:
+                return CalculateAdd(value, property, currentValue);
+            case EStatCalculationType.ADD_PERCENT:
+                return CalculateAddPercent(value, property, currentValue);
+            case EStatCalculationType.INCREASE:
+                return CalculateIncrease(value, property, currentValue);
+            case EStatCalculationType.INCREASE_PERCENT:
+                return CalculateIncreasePercent(value, property, currentValue);
+        }
+
+        return 0;
+    }
+
+    public dynamic CalculateDifference(string propertyName, EStatCalculationType statCalculationType, dynamic value)
+    {
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
+
+        switch (statCalculationType)
+        {
+            case EStatCalculationType.SET:
+                return value;
+            case EStatCalculationType.ADD:
+                return CalculateAdd(value, property, currentValue) - currentValue;
+            case EStatCalculationType.ADD_PERCENT:
+                return CalculateAddPercent(value, property, currentValue) - currentValue;
+            case EStatCalculationType.INCREASE:
+                return CalculateIncrease(value, property, currentValue) - currentValue;
+            case EStatCalculationType.INCREASE_PERCENT:
+                return CalculateIncreasePercent(value, property, currentValue) - currentValue;
+        }
+
+        return 0;
+    }
+
+    private void Set(string propertyName, dynamic value)
     {
         PropertyInfo property = GetType().GetProperties()
             .ToList()
@@ -192,52 +257,98 @@ public partial class StatsComponent : Node2D
         property.SetValue(this, Convert.ChangeType(value, property.PropertyType));
     }
 
-    public void Add(string propertyName, dynamic value)
+    private void Add(string propertyName, dynamic value)
     {
-        PropertyInfo property = GetType().GetProperties()
-            .ToList()
-            .Find(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
 
-        var currentValue = Convert.ToSingle(property.GetValue(this));
-        var finalValue = currentValue + value;
+        dynamic finalValue = CalculateAdd(value, property, currentValue);
 
         property.SetValue(this, Convert.ChangeType(finalValue, property.PropertyType));
     }
 
-    public void AddPercent(string propertyName, dynamic value)
+    private void AddPercent(string propertyName, dynamic value)
     {
-        PropertyInfo property = GetType().GetProperties()
-            .ToList()
-            .Find(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
 
-        var currentValue = Convert.ToSingle(property.GetValue(this));
-        var finalValue = currentValue + ((float)value / 100);
+        float finalValue = CalculateAddPercent(value, property, currentValue);
 
         property.SetValue(this, Convert.ChangeType(finalValue, property.PropertyType));
     }
 
-    public void Increase(string propertyName, dynamic value)
+    private void Increase(string propertyName, dynamic value)
     {
-        PropertyInfo property = GetType().GetProperties()
-            .ToList()
-            .Find(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
 
-        var currentValue = Convert.ToSingle(property.GetValue(this));
-        var finalValue = currentValue * value;
+        dynamic finalValue = CalculateIncrease(value, property, currentValue);
 
         property.SetValue(this, Convert.ChangeType(finalValue, property.PropertyType));
     }
 
-    public void IncreasePercent(string propertyName, dynamic percent)
+    private void IncreasePercent(string propertyName, dynamic percent)
     {
-        PropertyInfo property = GetType().GetProperties()
-            .ToList()
-            .Find(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+        GetCurrentValue(propertyName, out PropertyInfo property, out float currentValue);
+        float finalValue = CalculateIncreasePercent(percent, property, currentValue);
 
-        var currentValue = Convert.ToSingle(property.GetValue(this));
+        property.SetValue(this, Convert.ChangeType(finalValue, property.PropertyType));
+    }
+
+    private static float CalculateIncreasePercent(dynamic percent, PropertyInfo property, float currentValue)
+    {
         var finalValue = currentValue + (currentValue * ((float)percent / 100));
 
-        property.SetValue(this, Convert.ChangeType(finalValue, property.PropertyType));
+        finalValue = FixIntValue(property, (float)finalValue);
+        return finalValue;
+    }
+
+    private dynamic CalculateIncrease(dynamic value, PropertyInfo property, float currentValue)
+    {
+        var finalValue = currentValue * value;
+
+        finalValue = FixIntValue(property, (float)finalValue);
+        return finalValue;
+    }
+
+    private static float CalculateAddPercent(dynamic value, PropertyInfo property, float currentValue)
+    {
+        var finalValue = currentValue + ((float)value / 100);
+
+        finalValue = FixIntValue(property, (float)finalValue);
+        return finalValue;
+    }
+
+    private dynamic CalculateAdd(dynamic value, PropertyInfo property, float currentValue)
+    {
+        var finalValue = currentValue + value;
+
+        finalValue = FixIntValue(property, (float)finalValue);
+        return finalValue;
+    }
+
+    public void GetCurrentValue(string propertyName, out PropertyInfo property, out float currentValue)
+    {
+        property = GetType().GetProperties()
+                    .ToList()
+                    .Find(p => p.Name.Equals(propertyName, StringComparison.OrdinalIgnoreCase));
+
+        currentValue = Convert.ToSingle(property.GetValue(this));
+    }
+
+
+    private static float FixIntValue(PropertyInfo property, float finalValue)
+    {
+        if (property.PropertyType == typeof(int))
+        {
+            if (finalValue < 0)
+            {
+                finalValue = (float)Math.Floor(finalValue);
+            }
+            else
+            {
+                finalValue = (float)Math.Ceiling(finalValue);
+            }
+        }
+
+        return finalValue;
     }
 
     public override void _Ready()

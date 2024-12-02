@@ -1,22 +1,35 @@
-﻿using System;
+﻿using AroundYou.Models.Enums;
+using System;
 
 namespace AroundYou.Models.Modifiers
 {
     public class StatModifier : Modifier
     {
-        public dynamic Value { get; set; }
-        public Action<dynamic> AddToStat { get; set; }
+        public float Value { get; set; }
+        public string StatName { get; set; }
+        public EStatCalculationType StatCalculationType { get; set; }
 
-        public StatModifier(string descriptionTemplate, dynamic value, Action<dynamic> setStat)
+        public StatModifier(string descriptionTemplate, float value, string statName, EStatCalculationType statCalculationType)
             : base(descriptionTemplate)
         {
             Value = value;
-            AddToStat = setStat;
+            StatName = statName;
+            StatCalculationType = statCalculationType;
         }
 
-        public override void Apply()
+        public override void Apply(StatsComponent statComponent)
         {
-            AddToStat(Value);
+            statComponent.Calculate(StatName, StatCalculationType, Value);
+        }
+
+        public override dynamic PreCalculate(StatsComponent statComponent)
+        {
+            return statComponent.PreCalculate(StatName, StatCalculationType, Value);
+        }
+
+        public override dynamic CalculateDifference(StatsComponent statComponent)
+        {
+            return statComponent.CalculateDifference(StatName, StatCalculationType, Value);
         }
 
         public override string GenerateDescription()

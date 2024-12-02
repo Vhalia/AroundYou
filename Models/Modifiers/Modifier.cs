@@ -11,7 +11,11 @@ namespace AroundYou.Models.Modifiers
             DescriptionTemplate = descriptionTemplate;
         }
 
-        public abstract void Apply();
+        public abstract void Apply(StatsComponent statComponent);
+
+        public abstract dynamic PreCalculate(StatsComponent statComponent);
+
+        public abstract dynamic CalculateDifference(StatsComponent statComponent);
 
         public abstract string GenerateDescription();
 
